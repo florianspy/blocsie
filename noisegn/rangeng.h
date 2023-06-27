@@ -1,6 +1,3 @@
-
-//rosbag write of msg based on msg instance timestamps only works well if you used before the 
-//rosbagrewrite.py file that puts the message into the rosbag based on the msg timestamps and not on the received time 
 #pragma once
 #ifndef rangen_H
 #define rangen_H
