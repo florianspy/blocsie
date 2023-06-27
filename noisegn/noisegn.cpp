@@ -40,14 +40,14 @@ int main(int argc, char* argv[]){
 	deg_step_width_dcam = ReturnDiff(reader.col_info_vec());
 	dist_step_width_dcam = ReturnDiff(reader.row_info_vec());
 	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_range_dcam,max_deg_dcam);
-    std::vector<std::string> caminfo;
-    caminfo.push_back(std::string("/caminfo"));  
+    	std::vector<std::string> caminfo;
+    	caminfo.push_back(std::string("/caminfo"));  
 	std::vector<std::string> imgtopics;
-    imgtopics.push_back(std::string("/camera/color/image_raw"));	
+    	imgtopics.push_back(std::string("/camera/color/image_raw"));	
 	std::vector<std::string> depthtopics;
-    depthtopics.push_back(std::string("/depth2"));	
+    	depthtopics.push_back(std::string("/depth2"));	
 	std::vector<std::string> depthcaminfo;
-    depthcaminfo.push_back(std::string("/caminfo"));  
+    	depthcaminfo.push_back(std::string("/caminfo"));  
 	lidar.insert_datamodel_matdata(0,reader.file_data());
 	depthcam.insert_datamodel_matdata(0,reader.file_data());
 	reader.ReadFile(path_to_res+"SICK_grey_interpolate.txt");
@@ -59,23 +59,22 @@ int main(int argc, char* argv[]){
 	reader.ReadFile(path_to_res+"SICK_alu_interpolate.txt");
 	lidar.insert_datamodel_matdata(3,reader.file_data());
 	depthcam.insert_datamodel_matdata(3,reader.file_data());
-
-	//get first caminfo topic
+	//get first caminfo topic we require it for the distortion information which will be applied on each image
 	rosbag::Bag bagIn;
 	rosbag::Bag bagOut,bagOut2;
 	bagIn.open(bagPath, rosbag::bagmode::Read);
 	rosbag::View viewIn(bagIn);
-    foreach(rosbag::MessageInstance const msg, viewIn){
-         if(msg.getTopic()==caminfo[0]){
-               const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
-               subpub.caminfo(inf);
-        }  
+    	foreach(rosbag::MessageInstance const msg, viewIn){
+		 if(msg.getTopic()==caminfo[0]){
+		       const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
+		       subpub.caminfo(inf);
+		}  
 		if(msg.getTopic()==depthcaminfo[0]){
-               const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
-               depthcam.depthcaminfo(inf);
-				break;
-        }  
-    }
+               		const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
+               		depthcam.depthcaminfo(inf);
+			break;
+        	}	  
+   	}
 	//https://answers.ros.org/question/28766/rosbag-info-c-api/
 	std::cout<<viewIn.size()<<std::endl;
 	int percentage=viewIn.size()/10;
@@ -112,19 +111,13 @@ int main(int argc, char* argv[]){
 				else if(msg.getTopic() == lidaroutputtopic){
 				}
 				else{
-					if(msg.getTopic() == "/clock"){
-						bagOut.write(msg.getTopic(), msg.getTime(), msg);
-						bagOut2.write(msg.getTopic(), msg.getTime(), msg);
-					}
-					else{
-						//std::cout<<msg.getTime()<<" ";
-						bagOut.write(msg.getTopic(),msg.getTime(), msg);
-						bagOut2.write(msg.getTopic(), msg.getTime(), msg);						
-					}
+					bagOut.write(msg.getTopic(), msg.getTime(), msg);
+					bagOut2.write(msg.getTopic(), msg.getTime(), msg);
+					
 				}
 			}
 			bagOut.close();
 			bagOut2.close();
 	}
-    return 0;
+    	return 0;
 }
