@@ -36,7 +36,7 @@ double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,d
 	double sd_ldg=interpolate(sd_ldg_ld,ld,sd_ldg_hd,hd,interdis);
 	double sd_hdg=interpolate(sd_hdg_ld,ld,sd_hdg_hd,hd,interdis);
 	double value=interpolate(sd_ldg,ldg,sd_hdg,hdg,interdeg);
-	//std::cout<<std::setprecision(16)<<sd_ldg<<" "<<sd_hdg<<" "<<sd_ldg_ld<<" "<<sd_ldg_hd<<" "<<sd_hdg_ld<<" "<<sd_hdg_hd<<" "<<ld<<" "<<hd<<" "<<ldg<<" "<<hdg<<" "<<interdeg<<" "<<interdis<<" "<<value<<std::endl;
+	//std::cout<<sd_ldg<<" "<<sd_hdg<<" "<<sd_ldg_ld<<" "<<sd_ldg_hd<<" "<<sd_hdg_ld<<" "<<sd_hdg_hd<<" "<<ld<<" "<<hd<<" "<<ldg<<" "<<hdg<<" "<<interdeg<<" "<<interdis<<" "<<value<<std::endl;
 	return value;
 }
 
@@ -234,25 +234,20 @@ void MaterialInterpolator::InterpolateRefmat(){
 
 					if(distindx == 0){distindx=1;}
 					float value =-1;
-					//avoid that a sigma value of -1 is used for interpolation at those points we already have no data so we cannot interpolate
 					if(ref_material_1_[distindx-1][degindex-1] == -1 ||ref_material_1_[distindx][degindex-1] == -1 || ref_material_1_[distindx-1][degindex] == -1 || ref_material_1_[distindx][degindex] == -1){}
 					else{
-					
+
 					value = interpolatewithangle(ref_material_1_[distindx-1][degindex-1],ref_material_1_[distindx][degindex-1],ref_material_1_[distindx-1][degindex],ref_material_1_[distindx][degindex],distance_ref_1_[distindx-1],distance_ref_1_[distindx],deg_ref_1_[degindex-1],deg_ref_1_[degindex],step_width_interpolate_deg_*deg,y);
 					if(value < 0){
 						value=0;
 					}
 					}
 					material_sigma_.at(row).push_back(value);
-					if(deg == 4 || deg == 14){
-			std::cout<<degindex<<" "<<deg_ref_1_[degindex]<<" "<<ref_material_1_[distindx][degindex]<<" "<<ref_material_1_[distindx-1][degindex]<<" "<<value<<" "<<distance_ref_1_[distindx]<<" "<<ref_material_1_[distindx-1][degindex-1]<< " "<<ref_material_1_[distindx][degindex-1]<< " "<< distance_ref_1_[distindx-1]<<std::endl;
-					}
 					foundlarger=true;
 					break;
 				}
 			}
 			if(foundlarger==false){
-					//avoid that a sigma value of -1 is used for interpolation at those points we already have no data so we cannot interpolate
 					float value =-1;
 					if(ref_material_1_[lastvalue-1][degindex-1] == -1 ||ref_material_1_[lastvalue][degindex-1] == -1 || ref_material_1_[lastvalue-1][degindex] == -1 || ref_material_1_[lastvalue][degindex] == -1){}
 					else{
