@@ -13,12 +13,19 @@ https://github.com/florianspy/locchallbench/tree/main
 ## ros messages
 The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is required to be build before the noise generator.
 Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
+
 catkin_make
 ## lookup table generator 
-The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgn folder
+The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgn folder.
+Adopt now the modelgn.cpp file to generate the lookuptable files you require.
+
 Compile it via the following command:
+g++ FileHandler.cpp MaterialInterpolator.cpp modelgn.cpp
+
 ## noise generator 
-The source code for the noise generator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder.
+The source code for the noise generator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder. 
+Adopt now inside noisegn.cpp file, the values of the variables lidarmatandangtopic == topic of the msg that contains distance, material, and angle information, lidaroutputtopic == name of the lidar topic data with noise should be written into, depthtopics == topic of the depth images containing also material and angle information, imgtopics == ros image topic of RGB images, caminfo == the corresponding camerinfo topic to the RGB image, depthcaminfo == the corresponding camera_info topic to the depth image, path_to_res, amount_of_materials, deg_step_width,
+dist_step_width == distance in m between two values in the lookup table, max_range == maximum value of the lidar, conststd == constant standard deviation value, to match the topic names of your project.
 
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
