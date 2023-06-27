@@ -19,6 +19,7 @@ The source code to create txt files used in the noise generator as a lookup tabl
 Compile it via the following command:
 
 The source code for the noisegenerator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder.
+
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
 1. g++  -I/opt/ros/melodic/include -I/home/catkin_ws/devel/include/lidarmatmsg -I/home/catkin_ws/src/interpolate/src -Ofast -g3 -c -Wall -fmessage-length=0 -std=c++14 -MMD -MP -MF  -c noisegn.cpp pathtoFileHandlercpp/FileHandler.cpp  -march=native
