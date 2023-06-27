@@ -1,0 +1,21 @@
+<package format="2">
+  <name>lidarmatmsg</name>
+  <version>1.2.4</version>
+  <description>
+   material and angle msg for range sensor providing information which material was hit under which angle
+  </description>
+  <maintainer email="meow@meow.de">MEOW</maintainer>
+  <license>BSD</license>
+
+  <url>http://ros.org/wiki/foo_core</url>
+  <author>Mewo</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>std_msgs</depend>
+
+  <build_depend>message_generation</build_depend>
+
+  <exec_depend>message_runtime</exec_depend>
+</package>
