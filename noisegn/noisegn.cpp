@@ -15,24 +15,29 @@ int main(int argc, char* argv[]){
 	std::string outputPath = argv[2];
 	//amount of bags you want to create
 	int numSamples = atoi(argv[3]);
-	int amount_of_materials =4;
-	int deg_step_width=5;
-	double dist_step_width=0.5;
-	double max_range=10;
+	int amount_of_materials_lidar=4;
+	int deg_step_width_lidar=5;
+	double dist_step_width_lidar=0.5;
+	double max_range_lidar=10;
 	double conststd=0.02;
-	int max_deg=85;
+	int max_deg_lidar=85;
 	//get the data from data model and fill it in
  	std::string path_to_res = static_cast<std::string>("/home/catkin_ws/src/interpolate/src/");
 	FileHandler reader(path_to_res+"SICK_white_interpolate.txt", ' ', ':');
 	deg_step_width = ReturnDiff(reader.col_info_vec());
 	dist_step_width = ReturnDiff(reader.row_info_vec());
-	RangeSensor lidar=RangeSensor(std::string(""),dist_step_width,deg_step_width,amount_of_materials,max_range,max_deg,conststd);	
+	RangeSensor lidar=RangeSensor(std::string(""),dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
 	std::string lidarmatandangtopic ="/scan_frontmanda";
 	std::string lidaroutputtopic = "/scan_front";
 	std::string setting1 = outputPath + "";
 	mkdir(setting1.c_str(),0777);
 	RGB subpub = RGB();
-	DepthCam depthcam = DepthCam(dist_step_width,deg_step_width,amount_of_materials,max_range,max_deg);
+	int amount_of_materials_dcam=4;
+	int deg_step_width_dcam=5;
+	double dist_step_width_dcam=0.5;
+	double max_range_dcam=10;
+	int max_deg_dcam=85
+	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_range_dcam,max_deg_dcam);
     std::vector<std::string> caminfo;
     caminfo.push_back(std::string("/caminfo"));  
 	std::vector<std::string> imgtopics;
