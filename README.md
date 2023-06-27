@@ -1,24 +1,24 @@
 # blocsie
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
-
+## unity package
 Unity version required is 2022.x, ROS version required is ROS melodic
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
 Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
 Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 The Assets from external sources are listed in 
-
+## evaluation
 Link to the evaluation part
 https://github.com/florianspy/locchallbench/tree/main
-
+## ros messages
 The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is required to be build before the noise generator.
 Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
 catkin_make
-
+## lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgn folder
 Compile it via the following command:
-
-The source code for the noisegenerator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder.
+## noise generator 
+The source code for the noise generator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder.
 
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
