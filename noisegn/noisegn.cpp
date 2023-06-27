@@ -24,8 +24,8 @@ int main(int argc, char* argv[]){
 	//get the data from data model and fill it in
  	std::string path_to_res = static_cast<std::string>("/home/catkin_ws/src/interpolate/src/");
 	FileHandler reader(path_to_res+"SICK_white_interpolate.txt", ' ', ':');
-	deg_step_width = ReturnDiff(reader.col_info_vec());
-	dist_step_width = ReturnDiff(reader.row_info_vec());
+	deg_step_width_lidar = ReturnDiff(reader.col_info_vec());
+	dist_step_width_lidar = ReturnDiff(reader.row_info_vec());
 	RangeSensor lidar=RangeSensor(std::string(""),dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
 	std::string lidarmatandangtopic ="/scan_frontmanda";
 	std::string lidaroutputtopic = "/scan_front";
@@ -36,7 +36,9 @@ int main(int argc, char* argv[]){
 	int deg_step_width_dcam=5;
 	double dist_step_width_dcam=0.5;
 	double max_range_dcam=10;
-	int max_deg_dcam=85
+	int max_deg_dcam=85;
+	deg_step_width_dcam = ReturnDiff(reader.col_info_vec());
+	dist_step_width_dcam = ReturnDiff(reader.row_info_vec());
 	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_range_dcam,max_deg_dcam);
     std::vector<std::string> caminfo;
     caminfo.push_back(std::string("/caminfo"));  
