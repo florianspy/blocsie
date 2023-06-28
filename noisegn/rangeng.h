@@ -1,3 +1,7 @@
+// g++  -I/opt/ros/melodic/include -I/home/catkin_ws/devel/include/lidarmatmsg -I/home/catkin_ws/src/interpolate/src -Ofast -g3 -c -Wall -fmessage-length=0 -std=c++14 -MMD -MP -MF  -c noisegn.cpp /home/catkin_ws/src/interpolate/src/FileHandler.cpp  -march=native
+//g++ -L/opt/ros/melodic/lib -L/opt/ros/melodic/lib/x86_64-linux-gnu -o "noisegn" ./noisegn.o ./FileHandler.o -ltf2 -ltf -lxmlrpcpp -lcpp_common -lrosconsole_log4cxx -lroscpp_serialization -lopencv_calib3d -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lmessage_filters -lrostime -lroscpp -lboost_filesystem -lboost_system -lcv_bridge -lrosconsole_backend_interface -lrosconsole -ltf2_ros -lpthread -lboost_thread -lgsl -lgslcblas -lrosbag  -lm -lrt -ldl -lconsole_bridge  -lrosbag_storage -lcv_bridge -lopencv_core -lopencv_imgproc  -march=native
+//rosbag write of msg based on msg instance timestamps only works well if you used before the 
+//rosbagrewrite.py file that puts the message into the rosbag based on the msg timestamps and not on the received time 
 #pragma once
 #ifndef rangen_H
 #define rangen_H
@@ -157,9 +161,19 @@ void RangeSensor::GenerateDataDrivenStd(const lidarmatmsg::Scanmat::ConstPtr& ms
 				//nothing to be done
 		}
 		else{		
-			degindex=abs(msg->angle[l]/param.stepw_deg_model);	
+			degindex=abs(msg->angle[l]/param.stepw_deg_model);
+			double ind = abs(msg->angle[l]/(param.stepw_deg_model*1.0));
+			//is it closer to the lower or the higher value of the lookuptable, this checks if its closer to the higher value and then sets the value to look at accordingly
+			if(ind-((int)ind)>0.5){				
+				degindex++;
+			}
+			ind=ranges[l]/param.stepw_dist_model;
 			disindex=ranges[l]/param.stepw_dist_model;
-
+			//https://www.quora.com/How-do-you-get-the-number-after-the-decimal-point-in-C
+			//is it closer to the lower or the higher value of the lookuptable, this checks if its closer to the higher value and then sets the value to look at accordingly
+			if(ind-((int)ind)>0.5){				
+				disindex++;
+			}			
 			float std_dev=std_devtable[msg->material[l]][disindex][degindex];
 			if(std_dev != -1){
 				if(std_dev<0){std_dev=0;}
