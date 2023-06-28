@@ -32,8 +32,8 @@ Adopt now inside noisegn.cpp file, the values of the variables need to be adjust
 * caminfo == the corresponding camerinfo topic to the RGB image
 * depthcaminfo == the corresponding camera_info topic to the depth image
 * path_to_res == the path to the lookup table files
-* amount_of_materials == amount of materials for the lookup table file, deg_step_width ==,
-* conststd == constant standard deviation value
+* amount_of_materials == amount of materials for which lookup table files should be used
+* conststd == constant standard deviation value (only applied for lidar)
 
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
