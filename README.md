@@ -25,15 +25,17 @@ g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 ## noise generator 
 The source code for the noise generator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder. 
 Adopt now inside noisegn.cpp file, the values of the variables need to be adjusted:
-* lidarmatandangtopic == topic of the msg that contains distance, material, and angle information
+* lidarmatandangtopic == name of topic where Scanmat message containing distance, material, and angle information are published
+* depthtopics == name of topic where Cammat message containing depth, material and angle information are published
 * lidaroutputtopic == name of the lidar topic data with noise should be written into
-* depthtopics == topic of the depth images containing also material and angle information
 * imgtopics == ros image topic of RGB images
 * caminfo == the corresponding camerinfo topic to the RGB image
 * depthcaminfo == the corresponding camera_info topic to the depth image
-* path_to_res == the path to the lookup table files
 * amount_of_materials == amount of materials for which lookup table files should be used
+* path_to_res == the path to the lookup table files
+* ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
+
 
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
