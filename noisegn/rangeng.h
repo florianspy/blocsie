@@ -17,7 +17,6 @@
 #include "Scanmat.h"
 #include "FileHandler.h"
 #define foreach BOOST_FOREACH
-// This struct stores all the parameters passed through the frame_id
 // This is a global generator that doen't get reset to inital seed 
 static boost::taus88 generator=boost::taus88();
 static std::vector<boost::taus88> vect;
@@ -58,7 +57,6 @@ public:
         return var_nor();
     }
 };
-// This struct stores all the parameters passed through the frame_id
 struct Parameters {
    std::string lidartopic;
    float maxDist;
