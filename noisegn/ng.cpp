@@ -28,7 +28,7 @@ int main(int argc, char* argv[]){
 	dist_step_width_lidar = ReturnDiff(reader.row_info_vec());
 	max_range_lidar=reader.row_info_vec().back();
 	max_deg_lidar=reader.col_info_vec().back();	
-	RangeSensor lidar=RangeSensor(std::string(""),dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
+	RangeSensor lidar=RangeSensor(dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
 	std::string lidarmatandangtopic ="/scan_frontmanda";
 	std::string lidaroutputtopic = "/scan_front";
 	std::string setting1 = outputPath + "";
