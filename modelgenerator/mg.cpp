@@ -17,9 +17,7 @@ int main()
 		intensity_.push_back(reader_grey_intensity.file_data().at(0)[i]);
 	}
 	//example code to predict for lds with scaling approach
-	    //MaterialInterpolator lds(reader_lds_white.file_data(),reader_lds_white.row_info_vec(),0.469,0.531,intensity_, reader_grey_intensity.col_info_vec());
-    /*example code to predict for lds with offset approach
-	MaterialInterpolator lds_offset(reader.file_data(),reader.row_info_vec(),reader_lds_b.file_data(),reader_lds_b.row_info_vec(),-0.0407,0.0143,0.8194,0.1806,intensity_, reader2.col_info_vec());*/
+	//MaterialInterpolator lds(reader_lds_white.file_data(),reader_lds_white.row_info_vec(),0.469,0.531,intensity_, reader_grey_intensity.col_info_vec());
 	//example code to predict for sick with offset approach
 	//MaterialInterpolator sick(reader_sick_white.file_data(),reader_sick_white.row_info_vec(),reader_sick_black.file_data(),reader_sick_black.row_info_vec(),1.9992,-1.164,0.452,0.548,intensity_, reader_grey_intensity.col_info_vec());
 	//sick.PrintpredictedMat();
