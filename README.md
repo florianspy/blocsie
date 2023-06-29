@@ -16,7 +16,7 @@ Compile it via the following command after copying the packaged into the catkin_
 
 catkin_make
 ## lookup table generator 
-The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgn folder.
+The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgenerator folder.
 Adopt now the mg.cpp file to generate the lookuptable files you require, it contains already example source code. 
 * For simple interpolation, (the case when all measurement data is available), use the constructor with 8 arguments.
 * For the scaling prediction approach (applicable for the LDS), use the constructor with 6 arguments, and ensure that the data in ref_material_1 in the first column is for 0 degree.
