@@ -51,13 +51,15 @@ public:
 		//for the variance of this term we get a*(chi*)+ b
 		//the second summand is the gaussian variance with zero mean and multiplied by sqrt(b) which lead to a variance of b
 		//the first summand is the possion variance with chi*y mean  which is multiplied bya
-	    vector<boost::taus88> enginevec;
+	   vector<boost::taus88> enginevec;
 	   vector<boost::random::poisson_distribution<int>> bpd;
 	   float nla=na;
 	   float m;
+	   bool first=true;
 	   for(int i=1;i<256;i++){
 		   m= (i/(nla));
 		   enginevec.push_back(boost::taus88());
+		   
 		   boost::random::poisson_distribution<int>::param_type newParams=boost::random::poisson_distribution<int>::param_type(m);
 		   boost::random::poisson_distribution<int> test;
 		   test.param(newParams);
@@ -71,6 +73,7 @@ public:
 		   boost::variate_generator<boost::taus88,boost::random::poisson_distribution<int> > vd(enginevec[i-1],bpd[i-1]);
 		   vdlist.push_back(vd);
 	   }
+
 	   boost::taus88 engine2;
 	   boost::normal_distribution<float> nd(0,1);
 	   boost::variate_generator<boost::taus88,boost::normal_distribution<float> > var_nor(engine2, nd);
@@ -86,6 +89,7 @@ public:
 	   begin1 = std::chrono::steady_clock::now();
 	   int start = (tid * img_ptr->image.rows/NUM_THREADS);
 	   int end = (start + img_ptr->image.rows/NUM_THREADS);
+	   //as each thread handles other parts of the image the values of ptr will differ for the threads however after each run they will be the same.
 	   if(nla != 0){
 		   for (y = start; y < end;y++){
 			    ptr = img_ptr->image.ptr<cv::Vec3b>(y);
@@ -95,7 +99,9 @@ public:
 					    if(z!= 0){
 						   //https://stackoverflow.com/questions/2078474/how-to-use-boost-normal-distribution-classes
 						   ptr[x][k]=sqb*var_nor()+vdlist[z-1]()*nla;
-			
+						   if(first == true){first=false;
+							std::cout<<(int)ptr[x][k]<<" "<<tid<<std::endl;
+						   }
 					    }
 					    else{
 							ptr[x][k]+=sqb*var_nor();
@@ -370,7 +376,7 @@ public:
 		am_materials_=am_materials;
 		max_deg_=max_deg;
 		max_range_=max_range;
-		rnpabove= new RandomNoisePercent();
+		rnpabove= new  RandomGaussian();
 		for(int i=0;i<am_materials;i++){
 			std_devtable.push_back({});
 		}
@@ -431,8 +437,18 @@ public:
 					int mat=(int)message->mat[l];
 					int ang=(int)message->ang[l];
 					degindex=abs(ang/stepw_deg_model);	
-					disindex=depthimage.at<float>(l)/stepw_dist_model;
+					double ind = abs(ang/(stepw_deg_model*1.0));
+					//is it closer to the lower or the higher value of the lookuptable, this checks if its closer to the higher value and then sets the value to look at accordingly				
 
+					if(ind-((int)ind)>0.5){				
+						degindex++;
+
+					}
+					disindex=depthimage.at<float>(l)/stepw_dist_model;
+					ind=depthimage.at<float>(l)/stepw_dist_model;
+					if(ind-((int)ind)>0.5){				
+						disindex++;
+					}		
 					float std_dev=std_devtable[mat][disindex][degindex];
 					if(std_dev != -1){
 						if(std_dev<0){std_dev=0;}
@@ -508,23 +524,22 @@ public:
 		return true;
 	}
 private:
-        //for depth
-        Mat dmap_x,dmap_y;
-        Mat depthimage;
-        //distortion coefficients required to recognize changes in distortion coefficients
-        float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;
-        float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx,_dfy,_dcx,_dcy;
-        int dwidth,dheight;
-        Mat depthcameraMatrix;
-        Mat depthdistorsionMatrix;
-		std::vector<std::vector<std::vector<double>>> std_devtable;
-		double stepw_dist_model;
-		int stepw_deg_model;
-		int am_materials_;
-		int max_deg_;
-		double max_range_;
-		RandomNoise *rnpabove;
-        string depthpubtopic;
+    //for depth
+    Mat dmap_x,dmap_y;
+    Mat depthimage;
+    //distortion coefficients required to recognize changes in distortion coefficients
+    float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;
+    float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx=-2,_dfy,_dcx,_dcy;
+    int dwidth,dheight;
+    Mat depthcameraMatrix;
+    Mat depthdistorsionMatrix;
+	std::vector<std::vector<std::vector<double>>> std_devtable;
+	double stepw_dist_model;
+	int stepw_deg_model;
+	int am_materials_;
+	int max_deg_;
+	double max_range_;
+	RandomGaussian *rnpabove;
 };
 
 
