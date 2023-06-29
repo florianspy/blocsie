@@ -79,12 +79,10 @@ private:
 	std::vector<std::vector<std::vector<double>>> std_devtable;
 	
 public:
-	RangeSensor(std::string sensorname,double st_dist,int st_deg,int am_materials,double max_range,int max_deg,double conststd){
-		if(sensorname == ""){
-			for(int i=0;i<am_materials;i++){
-				std_devtable.push_back({});
-			}
-		}
+	RangeSensor(double st_dist,int st_deg,int am_materials,double max_range,int max_deg,double conststd){		
+		for(int i=0;i<am_materials;i++){
+			std_devtable.push_back({});
+		}		
 		rnpabove = new RandomNoisePercent();
 		param.stepw_dist_model=st_dist;
 		param.stepw_deg_model=st_deg;
