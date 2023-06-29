@@ -31,7 +31,7 @@ The source code for the noise generator can be found in noisegenerator folder, k
 Before you use any rosbag from unity ensure that you have run the python script rosbagwrite.py before as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted):
 
 python rosbagwrite.py input.bag output.bag
-
+### adjusting the source code
 Inside ng.cpp file the values of the following variables need to be adjusted to meet your settings:
 * lidarmatandangtopic == name of topic where Scanmat message containing distance, material, and angle information are published
 * depthtopics == name of topic where Cammat message containing depth, material and angle information are published
@@ -44,11 +44,17 @@ Inside ng.cpp file the values of the following variables need to be adjusted to 
 * ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
 
+### compiling
 
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgn:
 
 1. g++  -I/opt/ros/melodic/include -I/home/catkin_ws/devel/include/lidarmatmsg -I/home/catkin_ws/src/interpolate/src -Ofast -g3 -c -Wall -fmessage-length=0 -std=c++14 -MMD -MP -MF  -c ng.cpp pathtoFileHandlercpp/FileHandler.cpp  -march=native
 2. g++ -L/opt/ros/melodic/lib -L/opt/ros/melodic/lib/x86_64-linux-gnu -o "ng" ./ng.o ./FileHandler.o  -ltf2 -ltf -lxmlrpcpp -lcpp_common -lrosconsole_log4cxx -lroscpp_serialization -lopencv_calib3d -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lmessage_filters -lrostime -lroscpp -lboost_filesystem -lboost_system -lcv_bridge -lrosconsole_backend_interface -lrosconsole -ltf2_ros -lpthread -lboost_thread -lgsl -lgslcblas -lrosbag  -lm -lrt -ldl -lconsole_bridge  -lrosbag_storage -lcv_bridge -lopencv_core -lopencv_imgproc  -march=native
+   
+### usage
 
 The compiled file can then be used in the following way (input.bag is the rosbag that contains your data, outputfolder is the folder where the results are written to, amountofdatasets are the amount of datasets that should be created utilizing continuesly the same random number generator):
+
 ./ng input.bag outputfolder amountofdatasets
+
+You will get two rosbags for each dataset one with an constant standard deviation (noise-conststd) and one using the data driven model to create the noise (noise-datastd)
