@@ -9,7 +9,7 @@ int main()
     FileHandler reader_lds_white(path_to_res + "LDS_whitepaperascsv.txt", ' ', ':');
     FileHandler reader_lds_grey(path_to_res + "LDS_greypaperascsv.txt", ' ', ':');    
     FileHandler reader_sick_alu(path_to_res + "SICK_alu_ascsv.txt", ' ', ':');
-    FileHandler reader_sick_white(path_to_res + "SICK_whitepaperascsv.txt", ' ', ':');
+    FileHandler reader_sick_white(path_to_res + "SICK_whitepaper_ascsv.txt", ' ', ':');
     FileHandler reader_sick_black(path_to_res + "SICK_blackpaper_ascsv.txt", ' ', ':'); 
 	FileHandler reader_grey_intensity(path_to_res + "grey_intensity.txt",path_to_res + "grey_interpolate.txt",' ', ':');
 	FileHandler reader_alu_intensity(path_to_res + "alu_intensity.txt",path_to_res + "alu_interpolate.txt",' ', ':');
