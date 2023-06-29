@@ -7,7 +7,6 @@ int main()
 {
     std::string path_to_res = static_cast<std::string>("/home/catkin_ws/src/interpolate") + "/src/";
     FileHandler reader_lds_white(path_to_res + "LDS_whitepaperascsv.txt", ' ', ':');
-    FileHandler reader_lds_grey(path_to_res + "LDS_greypaperascsv.txt", ' ', ':');    
     FileHandler reader_sick_alu(path_to_res + "SICK_alu_ascsv.txt", ' ', ':');
     FileHandler reader_sick_white(path_to_res + "SICK_whitepaper_ascsv.txt", ' ', ':');
     FileHandler reader_sick_black(path_to_res + "SICK_blackpaper_ascsv.txt", ' ', ':'); 
