@@ -27,8 +27,12 @@ Compile it via the following command:
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 
 ## noise generator 
-The source code for the noise generator can be found in noisegn folder, keep in mind it requires the FileHandler from modelgn folder. 
-Adopt now inside noisegn.cpp file, the values of the variables need to be adjusted:
+The source code for the noise generator can be found in noisegenerator folder, keep in mind it requires the FileHandler from modelgenerator folder. 
+Before you use any rosbag from unity ensure that you have run the python script rosbagwrite.py before as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted):
+
+python rosbagwrite.py input.bag output.bag
+
+Inside ng.cpp file the values of the following variables need to be adjusted to meet your settings:
 * lidarmatandangtopic == name of topic where Scanmat message containing distance, material, and angle information are published
 * depthtopics == name of topic where Cammat message containing depth, material and angle information are published
 * lidaroutputtopic == name of the lidar topic data with noise should be written into
