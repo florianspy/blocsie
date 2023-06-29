@@ -39,7 +39,7 @@ Inside ng.cpp file the values of the following variables need to be adjusted to 
 * imgtopics == ros image topic of RGB images
 * caminfo == the corresponding camerinfo topic to the RGB image
 * depthcaminfo == the corresponding camera_info topic to the depth image
-* amount_of_materials == amount of materials for which lookup table files should be used
+* amount_of_materials_sensor ==  amount of materials = amount of lookup tables for this sensor 
 * path_to_res == the path to the lookup table files
 * ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
