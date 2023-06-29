@@ -1,5 +1,6 @@
 # blocsie
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
+The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## unity package
 Unity version required is 2022.x, ROS version required is ROS melodic
 Link to the unity project
