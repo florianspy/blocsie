@@ -30,6 +30,7 @@ Adopt now the mg.cpp file to generate the lookup table files you require. It alr
 * For the offset approach (applicable for the SICK TIM 561), use the constructor with ten arguments, and ensure that the data in ref_material_1, and ref_material_2 in the first column are both times for 0 degrees.
 
 Compile it via the following command:
+
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 
 ## Noise generator 
