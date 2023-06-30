@@ -1,14 +1,14 @@
 # BLOCSIE
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
-The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## Unity package
 Unity version required is 2022.x, ROS version required is ROS melodic
 
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
-Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
-Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
-The Assets from external sources are listed in 
+* Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
+* Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
+
+The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
 ## ROS messages
