@@ -1,8 +1,6 @@
 #ifndef MATERIAL_INTERPOLATOR_H_
 #define MATERIAL_INTERPOLATOR_H_
 
-#include <map>
-
 #include "FileHandler.h"
 
 
