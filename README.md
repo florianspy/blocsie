@@ -1,4 +1,4 @@
-# blocsie
+# BLOCSIE 
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## unity package
