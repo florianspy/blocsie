@@ -14,8 +14,7 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
 ## ROS 
 ### ROS messages
-The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is prerequisite for the noise generator.
-Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
+The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
 
 catkin_make
 ### ROS Unity connection
