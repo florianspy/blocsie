@@ -1,7 +1,7 @@
 # BLOCSIE
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 ## Unity package
-Unity version required is 2022.x, ROS version required is ROS melodic
+The required Unity version is 2022.x, the required ROS version is ROS melodic
 
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
