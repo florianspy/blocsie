@@ -9,7 +9,11 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
 * Download unity project from
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity 
-
+# usage
+First select which scenario you want to use by selecting the specific scenario in the top left menu and disabling the others.
+Second, use the path creator object to specify the path through the environment. 
+To make the robot then follow this path, select the robot and scroll to the  script called wheel_odom. Now select under the track you created the redheight object and choose it for the Target Path variable of the wheel_odom script. 
+Third, click on the robot object and make for the sensor you want to use the requried settings. The camera sensor can be found below the Gameobject d415. The Lidar at the Gameobject sick. Transformations can be found with tf script while the ground truth is inside the Position Script, which are all attached to the Robot Gameobject.
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
 ## ROS 
@@ -22,7 +26,7 @@ The connection between Unity and ROS requires building the following package ros
 1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
 2. catkin_make
 ### usage 
-
+roslaunch ros_tcp_endpoint endpoint.launch
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
 Adopt now the mg.cpp file to generate the lookup table files you require. It already contains an example source code.
