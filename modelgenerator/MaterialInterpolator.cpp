@@ -4,11 +4,11 @@
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
 
 {
- step_width_interpolate_deg_=step_width_interpolate_deg;
- step_width_interp_dist_=step_width_interp_dist;
- this->maxrange=maxrange;
- InterpolateIntensities(material_intensity,deg_intensity_);
- InterpolateLDS();
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	InterpolateIntensities(material_intensity,deg_intensity_);
+	InterpolateLDS();
 }
 
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double blackrelint,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
@@ -17,8 +17,8 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_
 	step_width_interp_dist_=step_width_interp_dist;
 	this->maxrange=maxrange;
 	this->blackrelint=blackrelint;
-    InterpolateIntensities(material_intensity,deg_intensity_);
-    InterpolateSICK();
+	InterpolateIntensities(material_intensity,deg_intensity_);
+	InterpolateSICK();
 }
 
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg,bool withcrit):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(deg),deg_intensity_(deg_intensity),withcrit_(withcrit)
@@ -27,7 +27,7 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 	step_width_interp_dist_=step_width_interp_dist;
 	this->maxrange=maxrange;
 	InterpolateIntensities(material_intensity,deg_intensity_);
-    InterpolateRefmat();
+	InterpolateRefmat();
 }
 //we need double values here as our red in values have 16 digits and therefore can only be transfered when using double not float
 double interpolate(double low_val,double low_deg,double up_val,double up_deg,double intmed_deg)
