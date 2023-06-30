@@ -1,22 +1,22 @@
 # BLOCSIE
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
-## unity package
+## Unity package
 Unity version required is 2022.x, ROS version required is ROS melodic
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
 Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
 Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 The Assets from external sources are listed in 
-## evaluation
+## Evaluation
 Link to the evaluation part
 https://github.com/florianspy/locchallbench/tree/main
-## ros messages
+## ROS messages
 The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is required to be build before the noise generator.
 Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
 
 catkin_make
-## lookup table generator 
+## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgenerator folder.
 Adopt now the mg.cpp file to generate the lookuptable files you require, it contains already example source code. 
 * For simple interpolation, (the case when all measurement data is available), use the constructor with 8 arguments.
@@ -26,7 +26,7 @@ Adopt now the mg.cpp file to generate the lookuptable files you require, it cont
 Compile it via the following command:
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 
-## noise generator 
+## Noise generator 
 The source code for the noise generator can be found in noisegenerator folder, keep in mind it requires the FileHandler from modelgenerator folder. 
 Before you use any rosbag from unity ensure that you have run the python script rosbagwrite.py before as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted):
 
