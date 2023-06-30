@@ -1,23 +1,32 @@
 #include "MaterialInterpolator.h"
 #include <iomanip>
 
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
 
 {
+ step_width_interpolate_deg_=step_width_interpolate_deg;
+ step_width_interp_dist_=step_width_interp_dist;
+ this->maxrange=maxrange;
  InterpolateIntensities(material_intensity,deg_intensity_);
  InterpolateLDS();
 }
 
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double blackrelint,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
 {
-
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	this->blackrelint=blackrelint;
     InterpolateIntensities(material_intensity,deg_intensity_);
     InterpolateSICK();
 }
 
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<double> deg_ref_1,double maxrang,double step_width_interp_dist,std::vector<double>  material_intensity,std::vector<double> deg,bool withcrit):ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),deg_ref_1_(deg_ref_1),maxrange(maxrang),step_width_interp_dist_(step_width_interp_dist),deg_intensity_(deg),withcrit_(withcrit)
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg,bool withcrit):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(deg),deg_intensity_(deg_intensity),withcrit_(withcrit)
 {
- InterpolateIntensities(material_intensity,deg_intensity_);
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	InterpolateIntensities(material_intensity,deg_intensity_);
     InterpolateRefmat();
 }
 //we need double values here as our red in values have 16 digits and therefore can only be transfered when using double not float
@@ -53,21 +62,13 @@ void MaterialInterpolator::change_material_intensity_data(std::vector<double> ma
 double calcblackscaleforoffset(double intensity,double blackzero,double p3,double p4){
 	return blackzero/intensity*p3+p4;	
 }
-std::map<int, std::vector<std::vector<double>>> MaterialInterpolator::material_map()
-{
-    return material_map_;
-}
+
 //blackrelint should become a parameter later
 void MaterialInterpolator::InterpolateSICK()
 {
-	double blackrelint=0.179;
-	maxrange=10.0;
-	step_width_interp_dist_=0.5;
+	
 	int dimy=maxrange/step_width_interp_dist_;
 	int dimx=90/step_width_interpolate_deg_;
-	//std::vector<double> distance_int{0.468,0.687,0.97,1.226,1.455,1.575,1.709,1.973,2.473,2.992,3.489,3.739,3.964,4.227,4.472,4.99,5.473,5.974,6.466,6.978,7.444,7.963,8.447,8.936,9.441,9.914};
-	//std::vector<double> distance_int{0.153,0.236,0.338,0.445,0.547,0.639,0.693,0.777,0.875,0.978,1.103,1.185,1.292,1.369,1.491,1.564,1.677,1.8,1.958,2.041,2.12,2.208,2.314};
-	int deg=0;
 	for(int rows=0;rows<dimy+1;rows++){
 	    material_sigma_.push_back({});
 	}
@@ -86,9 +87,6 @@ void MaterialInterpolator::InterpolateSICK()
 				double value=y*mt+t;	
 				material_sigma_.at(row).push_back(value);
 				foundoffset=true;
-				if(deg == 0 || deg == 12){
-					std::cout<<y<<" "<<value<<" "<<shiftwhite<<std::endl;;
-				}
 				break;
 			}
 		    }
@@ -103,25 +101,19 @@ void MaterialInterpolator::InterpolateSICK()
 					value=value*scalblack;
 					material_sigma_.at(row).push_back(value);
 					foundoffset=true;
-					if(deg == 0 || deg == 12){
-						std::cout<<y<<" "<<value<<std::endl;;
-					}
 					break;
 				}
 			}
 		    }
 		    if(foundoffset == false){
-			double mt=(ref_material_2_[blackl][0]-ref_material_2_[blackl-1][0])/(distance_ref_2_[blackl]-distance_ref_2_[blackl-1]);					
-			double t=ref_material_2_[blackl][0]-mt*(distance_ref_2_[blackl]);				
-			double value=y*mt+t;	
-			double scalblack=calcblackscaleforoffset(material_intensity_inter_.at(deg)/100.0,blackrelint,p3_,p4_);
-			value=value*scalblack;
-			material_sigma_.at(row).push_back(value);
-			foundoffset=true;
-			if(deg == 0 || deg == 12){
-				std::cout<<y<<" "<<value<<std::endl;
-			}
-			break;
+				double mt=(ref_material_2_[blackl][0]-ref_material_2_[blackl-1][0])/(distance_ref_2_[blackl]-distance_ref_2_[blackl-1]);					
+				double t=ref_material_2_[blackl][0]-mt*(distance_ref_2_[blackl]);				
+				double value=y*mt+t;	
+				double scalblack=calcblackscaleforoffset(material_intensity_inter_.at(deg)/100.0,blackrelint,p3_,p4_);
+				value=value*scalblack;
+				material_sigma_.at(row).push_back(value);
+				foundoffset=true;
+				break;
 		    }
 		    row=row+1;
 		}
@@ -129,8 +121,6 @@ void MaterialInterpolator::InterpolateSICK()
 }
 //this is the scaling and prediction stuff 
 void MaterialInterpolator::InterpolateLDS(){
-    maxrange=3.5;
-    step_width_interp_dist_=0.1;
     int dimy=maxrange/step_width_interp_dist_;
     int dimx=90/step_width_interpolate_deg_;
     material_sigma_.clear();
@@ -196,7 +186,7 @@ std::vector<std::vector<double>> MaterialInterpolator::sigma_with_deg_dis(){
 }
 
 void MaterialInterpolator::InterpolateRefmat(){
-    	float critical_val=17.9/pow(2.158,2);
+    float critical_val=17.9/pow(2.158,2);
  	critical_val=21.3/pow(9.92,2);
 	int dimy=maxrange/step_width_interp_dist_;
 	int dimx=90/step_width_interpolate_deg_;
@@ -231,16 +221,15 @@ void MaterialInterpolator::InterpolateRefmat(){
 			for(int x=0;x<distance_ref_1_.size();x++){	
 				if(distance_ref_1_[x]>y){
 					int distindx=x;
-
+			
 					if(distindx == 0){distindx=1;}
 					float value =-1;
 					if(ref_material_1_[distindx-1][degindex-1] == -1 ||ref_material_1_[distindx][degindex-1] == -1 || ref_material_1_[distindx-1][degindex] == -1 || ref_material_1_[distindx][degindex] == -1){}
-					else{
-
-					value = interpolatewithangle(ref_material_1_[distindx-1][degindex-1],ref_material_1_[distindx][degindex-1],ref_material_1_[distindx-1][degindex],ref_material_1_[distindx][degindex],distance_ref_1_[distindx-1],distance_ref_1_[distindx],deg_ref_1_[degindex-1],deg_ref_1_[degindex],step_width_interpolate_deg_*deg,y);
-					if(value < 0){
-						value=0;
-					}
+					else{					
+						value = interpolatewithangle(ref_material_1_[distindx-1][degindex-1],ref_material_1_[distindx][degindex-1],ref_material_1_[distindx-1][degindex],ref_material_1_[distindx][degindex],distance_ref_1_[distindx-1],distance_ref_1_[distindx],deg_ref_1_[degindex-1],deg_ref_1_[degindex],step_width_interpolate_deg_*deg,y);
+						if(value < 0){
+							value=0;
+						}
 					}
 					material_sigma_.at(row).push_back(value);
 					foundlarger=true;
