@@ -1,6 +1,5 @@
 # BLOCSIE
 ![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
-
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## unity package
