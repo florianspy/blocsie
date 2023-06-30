@@ -5,17 +5,24 @@ Unity version required is 2022.x, ROS version required is ROS melodic
 
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
-* Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
-* Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
+* Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
+* Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
+* Import the downloaded package in unity 
 
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
-## ROS messages
-The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is required to be build before the noise generator.
+## ROS 
+### ROS messages
+The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is prerequisite for the noise generator.
 Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
 
 catkin_make
+### ROS Unity connection
+The connection between unity and ros requires to build the following ros tcp endpoint https://github.com/Unity-Technologies/ROS-TCP-Endpoint.
+1. Download the package into your catkin_ws/src folder
+2. catkin_make
+
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the datadriven model can be found in modelgenerator folder.
 Adopt now the mg.cpp file to generate the lookuptable files you require, it contains already example source code. 
