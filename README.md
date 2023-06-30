@@ -15,7 +15,7 @@ Second, use the path creator object to specify the path through the environment.
 To make the robot then follow this path, select the robot and scroll to the  script called wheel_odom. Now select under the track you created the redheight object and choose it for the Target Path variable of the wheel_odom script. 
 Third, click on the robot object and make for the sensor you want to use the requried settings. The camera sensor can be found below the Gameobject d415. The Lidar at the Gameobject sick. Transformations can be found with tf script while the ground truth is inside the Position Script, which are all attached to the Robot Gameobject.
 ## Evaluation
-The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
+The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui
 ## ROS 
 ### ROS messages
 The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
