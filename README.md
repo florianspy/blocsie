@@ -4,12 +4,12 @@ BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The required Unity version is 2022.x, the required ROS version is ROS melodic
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 
-# installation
+### installation
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
 * Download unity project from
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity 
-# usage
+### usage
 First select which scenario you want to use by selecting the specific scenario in the top left menu and disabling the others.
 Second, use the path creator object to specify the path through the environment. 
 To make the robot then follow this path, select the robot and scroll to the  script called wheel_odom. Now select under the track you created the redheight object and choose it for the Target Path variable of the wheel_odom script. 
