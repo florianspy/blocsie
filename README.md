@@ -18,8 +18,8 @@ The source code for the ROS package containing the ROS message definition for tr
 
 catkin_make
 ### ROS Unity connection
-The connection between unity and ros requires to build the following ros tcp endpoint https://github.com/Unity-Technologies/ROS-TCP-Endpoint.
-1. Download the package into your catkin_ws/src folder
+The connection between Unity and ROS requires building the following package ros_tcp_endpoint.
+1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
 2. catkin_make
 
 ## Lookup table generator 
