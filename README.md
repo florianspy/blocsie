@@ -38,14 +38,14 @@ The source code for the noise generator can be found in the noisegenerator folde
 
 python rosbagwrite.py input.bag output.bag
 ### adjusting the source code
-Inside ng.cpp file the values of the following variables need to be adjusted to meet your settings:
-* lidarmatandangtopic == name of topic where Scanmat message containing distance, material, and angle information are published
-* depthtopics == name of topic where Cammat message containing depth, material and angle information are published
+Inside ng.cpp file, the values of the following variables need to be adjusted to meet your settings:
+* lidarmatandangtopic == name of the topic where Scanmat message containing distance, material, and angle information is published
+* depthtopics == name of the topic where Cammat message containing depth, material, and angle information are published
 * lidaroutputtopic == name of the lidar topic data with noise should be written into
 * imgtopics == ros image topic of RGB images
-* caminfo == the corresponding camerinfo topic to the RGB image
+* caminfo == the corresponding camera_info topic to the RGB image
 * depthcaminfo == the corresponding camera_info topic to the depth image
-* amount_of_materials_sensor ==  amount of materials = amount of lookup tables for this sensor 
+* amount_of_materials_sensor == amount of materials = amount of lookup tables for this sensor
 * path_to_res == the path to the lookup table files
 * ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
