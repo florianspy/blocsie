@@ -10,14 +10,15 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 * Download unity project from
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity 
 ### usage
-First, select which scenario you want to use by selecting the specific scenario in the top left menu and turning off the others.
-Second, use the path creator object to specify the path through the environment as well as the speed.
+1. Select which scenario you want to use by selecting the specific scenario in the top left menu and turning off the others.
+2. Use the path creator object to specify the path through the environment as well as the speed.
 To make the robot follow the created path, select the robot and scroll to the script called wheel_odom. Now select from the path object you created the height object and choose it for the Target Path variable of the wheel_odom script. 
-Third, click on the robot Gameobject and adjust the sensors you want to use.
+3. click on the robot Gameobject and adjust the sensors you want to use.
 * The camera sensor can be found below the Gameobject d415. It allows one to set the camera resolution, the distortion parameters, frame rate, the field of view, near and far clipping, and the name of the topics.
 Further, the depth camera is accessible from here. It has the same options as the camera object. The depth camera, which publishes the material and angle of hit information, is available here.
 * The LIDAR can be adjusted at the Gameobject called "sick." Here options such as max range, scans per second, and angular resolution can be set up. The LIDAR script publishes on one lidar_topic the distance data, while on the matandangtopic, the messages contain information about distance, material, and angle of hit.
 * Transformations can be found within the tf script, and the ground truth is inside the Position Script; both are directly attached to the Robot Gameobject.
+4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains a usage description.
 ## ROS 
