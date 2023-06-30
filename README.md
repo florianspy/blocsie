@@ -3,6 +3,7 @@ BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## Unity package
 Unity version required is 2022.x, ROS version required is ROS melodic
+
 Link to the unity project
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
 Import the package in unity and also install unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector.
