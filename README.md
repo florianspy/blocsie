@@ -2,14 +2,14 @@
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 ## Unity package
 The required Unity version is 2022.x, the required ROS version is ROS melodic
+The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 
-Link to the unity project
-https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/view
+# installation
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
-* Import the downloaded package in Unity 
+* Download unity project from
+https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity 
 
-The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
 ## ROS 
@@ -21,6 +21,7 @@ catkin_make
 The connection between Unity and ROS requires building the following package ros_tcp_endpoint.
 1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
 2. catkin_make
+### usage 
 
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
@@ -28,7 +29,7 @@ Adopt now the mg.cpp file to generate the lookup table files you require. It alr
 * For simple interpolation (the case when all measurement data is available), use the constructor with nine arguments and the last argument being a bool.
 * For the scaling prediction approach (applicable for the LDS), use the constructor with nine arguments, and ensure that the data in ref_material_1 in the first column is for 0 degrees.
 * For the offset approach (applicable for the SICK TIM 561), use the constructor with fourteen arguments, and ensure that the data in ref_material_1, and ref_material_2 in the first column are both times for 0 degrees.
-
+### compiling
 Compile it via the following command:
 
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
