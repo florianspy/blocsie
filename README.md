@@ -9,8 +9,7 @@ Import the package in unity and also install unity ros_tcp_endpoint package foll
 Additionally you need to install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 The Assets from external sources are listed in 
 ## Evaluation
-Link to the evaluation part
-https://github.com/florianspy/locchallbench/tree/main
+The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main
 ## ROS messages
 The source code for the ros package containing the ros msg definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is required to be build before the noise generator.
 Compile it via the following command after copying the packaged into the catkin_ws src folder and going into the catkin_ws folder:
