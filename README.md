@@ -1,5 +1,4 @@
 # BLOCSIE
-![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 The asset sources are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ## unity package
@@ -59,3 +58,5 @@ The compiled file can then be used in the following way (input.bag is the rosbag
 ./ng input.bag outputfolder amountofdatasets
 
 You will get two rosbags for each dataset one with an constant standard deviation (noise-conststd) and one using the data driven model to create the noise (noise-datastd)
+
+![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
