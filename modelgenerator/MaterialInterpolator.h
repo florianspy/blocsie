@@ -3,7 +3,6 @@
 
 #include "FileHandler.h"
 
-
 class MaterialInterpolator
 {
 public:
@@ -21,7 +20,7 @@ public:
 	*  @param step_width_interpolate_deg the step width regarding degrees between two values of the generated standard deviations
 	*/
 
-	MaterialInterpolator(std::vector<std::vector<double>> ref_material, std::vector<double> distance_ref,float k1,float k2, std::vector<double> material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg);
+	MaterialInterpolator(std::vector<std::vector<double>> ref_material, std::vector<double> distance_ref,float k1,float k2, std::vector<double> material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg);
 	/** @brief Constructor for creating a lookup table based on the offset approach. 
 	* Use the function sigma_with_deg_dis() and pass the result to the function WriteFile called on an object of type FileHandler to the write the results into a file.
 	*
@@ -42,7 +41,7 @@ public:
 	*  @param step_width_interpolate_deg the step width regarding degrees between two values of the generated standard deviations
 	*/
 	MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double relintref2_0deg,float p1,float p2,float p3,
-	float p4,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg);
+	float p4,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg);
 	/** @brief Constructor for creating a lookup table based on interpolation of values . 
 	* Use the function sigma_with_deg_dis() and pass the result to the function WriteFile called on an object of type FileHandler to the write the results into a file.
 	*
@@ -56,10 +55,21 @@ public:
 	*  @param step_width_interpolate_deg the step width regarding degrees between two values of the generated standard deviations
 	*  @param withcrit when set to true, a -1 will be written for the standard deviation at positions where the intensity would drop below a transhold
 	*/
-	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg,bool withcrit);
-    ~MaterialInterpolator();
+	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg,bool withcrit);
+	/** @brief Constructor for creating a lookup table based on interpolation of values for wheel odometry data. 
+	* Use the function sigma_with_deg_dis() and pass the result to the function WriteFile called on an object of type FileHandler to the write the results into a file.
+	*
+	*  @param material contains a matrix contain the standard deviation values for which interpolation should be applied
+	*  @param vel contains the velocity data for the matrix passed via material
+	*  @param mu contains the mu (dynamic friction) data for the matrix passed via material (given as percentage)
+	*  @param maxvel the maxium velocity for which data should be generated (max mu is always 100%=1)
+	*  @param step_width_interp_vel the step width regarding velocity between two values of the generated standard deviations
+	*  @param step_width_interpolate_mu the step width regarding mu between two values of the generated standard deviations
+	*/
+	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> vel,std::vector<double> mu,double maxvel,double step_width_interp_vel,double step_width_interpolate_mu);
+	~MaterialInterpolator();
 	void change_material_intensity_data(std::vector<double> material_intensity_data,std::vector<double> deg);
-    // Getter functions
+	// Getter functions
 	std::vector<double> interpolated_deg();
 	std::vector<double> interpolated_distance();
 	void PrintInterpolateIntensities();
@@ -68,9 +78,9 @@ public:
 	std::vector<std::vector<double>> mat_sigma();//return calculated predicted sigma values
 	std::vector<std::vector<double>> sigma_with_deg_dis();//return calculated predicted sigma values with the row and column infos
 private:
-	int step_width_interpolate_deg_;//before change ensure that old data was stored away
+	double step_width_interpolate_deg_;//before change ensure that old data was stored away
 	double step_width_interp_dist_;
-	double maxrange;
+	double maxrange,maxdeg;
 	double blackrelint;
 	bool withcrit_;//this feature is only used for ref material interpolation and enables a check if at the distance for which we calculated a sigma value a signal would still be sensed due to the intensity of the reflected signal at that position. For this check the intensity divided by distance^2 = a is divided by the intensity/distance^2 of the last distance where data still could be received. If the result is >= 1 data is received if not a -1 gets written for sigma value
 	void InterpolateSICK();

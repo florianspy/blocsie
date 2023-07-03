@@ -1,34 +1,5 @@
 #include "MaterialInterpolator.h"
 #include <iomanip>
-
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
-
-{
-	step_width_interpolate_deg_=step_width_interpolate_deg;
-	step_width_interp_dist_=step_width_interp_dist;
-	this->maxrange=maxrange;
-	InterpolateIntensities(material_intensity,deg_intensity_);
-	InterpolateLDS();
-}
-
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double relintref2_0deg,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
-{
-	step_width_interpolate_deg_=step_width_interpolate_deg;
-	step_width_interp_dist_=step_width_interp_dist;
-	this->maxrange=maxrange;
-	this->blackrelint=relintref2_0deg;
-	InterpolateIntensities(material_intensity,deg_intensity_);
-	InterpolateSICK();
-}
-
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,int step_width_interpolate_deg,bool withcrit):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(deg),deg_intensity_(deg_intensity),withcrit_(withcrit)
-{
-	step_width_interpolate_deg_=step_width_interpolate_deg;
-	step_width_interp_dist_=step_width_interp_dist;
-	this->maxrange=maxrange;
-	InterpolateIntensities(material_intensity,deg_intensity_);
-	InterpolateRefmat();
-}
 //we need double values here as our red in values have 16 digits and therefore can only be transfered when using double not float
 double interpolate(double low_val,double low_deg,double up_val,double up_deg,double intmed_deg)
 {
@@ -36,7 +7,6 @@ double interpolate(double low_val,double low_deg,double up_val,double up_deg,dou
     double t=low_val-m*low_deg;
     return (m*intmed_deg+t);
 }
-
 //sd_hdg_ld = stand dev high degree at lower distance
 //sd_ldg_hd = sd lower degree at high distance
 double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,double sd_hdg_hd,double ld,double hd,double ldg,double hdg,double interdeg,double interdis){
@@ -45,9 +15,107 @@ double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,d
 	double sd_ldg=interpolate(sd_ldg_ld,ld,sd_ldg_hd,hd,interdis);
 	double sd_hdg=interpolate(sd_hdg_ld,ld,sd_hdg_hd,hd,interdis);
 	double value=interpolate(sd_ldg,ldg,sd_hdg,hdg,interdeg);
-	//std::cout<<sd_ldg<<" "<<sd_hdg<<" "<<sd_ldg_ld<<" "<<sd_ldg_hd<<" "<<sd_hdg_ld<<" "<<sd_hdg_hd<<" "<<ld<<" "<<hd<<" "<<ldg<<" "<<hdg<<" "<<interdeg<<" "<<interdis<<" "<<value<<std::endl;
+	/*double sd_ldg=interpolate(sd_ldg_ld,ldg,sd_hdg_ld,hdg,interdeg);
+	double sd_hdg=interpolate(sd_ldg_hd,ldg,sd_hdg_hd,hdg,interdeg);
+	double value=interpolate(sd_ldg,ld,sd_hdg,hd,interdis);*/
 	return value;
 }
+
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
+
+{
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	InterpolateIntensities(material_intensity,deg_intensity_);
+	maxdeg=90;
+	InterpolateLDS();
+}
+
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double relintref2_0deg,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
+{
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	this->blackrelint=relintref2_0deg;
+	InterpolateIntensities(material_intensity,deg_intensity_);
+	maxdeg=90;
+	InterpolateSICK();
+}
+
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg,bool withcrit):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(deg),deg_intensity_(deg_intensity),withcrit_(withcrit)
+{
+	step_width_interpolate_deg_=step_width_interpolate_deg;
+	step_width_interp_dist_=step_width_interp_dist;
+	this->maxrange=maxrange;
+	InterpolateIntensities(material_intensity,deg_intensity_);
+	maxdeg=90;
+	InterpolateRefmat();
+}
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> mu,double maxvel,double step_width_interp_dist,double step_width_interpolate_mu):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(mu){
+	step_width_interp_dist_=step_width_interp_dist;
+	maxrange=maxvel;
+	step_width_interpolate_deg_=step_width_interpolate_mu;
+	int dimy=maxrange/step_width_interp_dist_;
+	maxdeg=100.0;
+	int dimx=maxdeg/step_width_interpolate_mu;
+	for(int rows=0;rows<dimy+1;rows++){
+	    material_sigma_.push_back({});
+	}
+	int degindex=0; 
+	int lastvalue=distance_ref_1_.size()-1;
+	for(int deg=0;deg<dimx;deg++){
+		int row=0;
+		//find the degreeindex for interpolation
+		for(degindex=0;degindex<deg_ref_1_.size();degindex++){
+			if(step_width_interpolate_deg_*deg<=deg_ref_1_[degindex]){			
+					break;
+			}
+		}
+		if(degindex==deg_ref_1_.size()-1){
+			degindex=degindex-1;
+		}
+		if(degindex==deg_ref_1_.size()){
+			degindex=degindex-2;
+		}
+		for(double y=0;y<=maxrange+0.01;y=y+step_width_interp_dist_){
+			bool foundlarger=false;		
+			for(int x=0;x<distance_ref_1_.size();x++){	
+				if(distance_ref_1_[x]>y){
+					int distindx=x;			
+					if(distindx == 0){distindx=1;}
+					float value =-1;
+					if(ref_material_1_[distindx-1][degindex+1] == -1 ||ref_material_1_[distindx][degindex+1] == -1 || ref_material_1_[distindx-1][degindex] == -1 || ref_material_1_[distindx][degindex] == -1){}
+					else{	
+
+						value = interpolatewithangle(ref_material_1_[distindx-1][degindex+1],ref_material_1_[distindx][degindex+1],ref_material_1_[distindx-1][degindex],ref_material_1_[distindx][degindex],distance_ref_1_[distindx-1],distance_ref_1_[distindx],deg_ref_1_[degindex],deg_ref_1_[degindex+1],step_width_interpolate_deg_*deg,y);
+						if(value < 0){
+							value=0;
+						}
+					}
+					material_sigma_.at(row).push_back(value);
+					foundlarger=true;
+					break;
+				}
+			}
+			if(foundlarger==false){
+					float value =-1;
+					if(ref_material_1_[lastvalue-1][degindex+1] == -1 ||ref_material_1_[lastvalue][degindex+1] == -1 || ref_material_1_[lastvalue-1][degindex] == -1 || ref_material_1_[lastvalue][degindex] == -1){}
+					else{
+
+					value = interpolatewithangle(ref_material_1_[lastvalue-1][degindex],ref_material_1_[lastvalue][degindex],ref_material_1_[lastvalue-1][degindex+1],ref_material_1_[lastvalue][degindex+1],distance_ref_1_[lastvalue-1],distance_ref_1_[lastvalue],deg_ref_1_[degindex],deg_ref_1_[degindex+1],step_width_interpolate_deg_*deg,y);}
+					if(value < 0){
+						value=0;
+					}
+					material_sigma_.at(row).push_back(value);
+					/*if(deg == 0){std::cout<<y<<" "<<value<<" "<<distance_ref_1_[lastvalue-1]<<" "<<ref_material_1_[lastvalue-1][degindex+1]<<" "<<ref_material_1_[lastvalue][degindex+1]<<" "<<ref_material_1_[lastvalue][degindex]<<" "<<deg_ref_1_[degindex]<<" "<<deg_ref_1_[degindex+1]<<std::endl;}*/
+			}
+	    		row=row+1;}
+	}
+}
+
+
+
 
 MaterialInterpolator::~MaterialInterpolator()
 {
@@ -186,8 +254,8 @@ std::vector<std::vector<double>> MaterialInterpolator::sigma_with_deg_dis(){
 }
 
 void MaterialInterpolator::InterpolateRefmat(){
-    float critical_val=17.9/pow(2.158,2);
- 	critical_val=21.3/pow(9.92,2);
+	float critical_val=17.9/pow(2.158,2);
+	critical_val=21.3/pow(9.92,2);
 	int dimy=maxrange/step_width_interp_dist_;
 	int dimx=90/step_width_interpolate_deg_;
 	for(int rows=0;rows<dimy+1;rows++){
@@ -197,9 +265,7 @@ void MaterialInterpolator::InterpolateRefmat(){
 	int lastvalue=distance_ref_1_.size()-1;
 	for(int deg=0;deg<dimx;deg++){
 		int row=0;
-		int degindex=1;
 		//find the degreeindex for interpolation
-		
 		for(degindex=1;degindex<deg_ref_1_.size();degindex++){
 			if(step_width_interpolate_deg_*deg<=deg_ref_1_[degindex]){			
 					break;
@@ -242,7 +308,7 @@ void MaterialInterpolator::InterpolateRefmat(){
 					else{
 					value = interpolatewithangle(ref_material_1_[lastvalue-1][degindex-1],ref_material_1_[lastvalue][degindex-1],ref_material_1_[lastvalue-1][degindex],ref_material_1_[lastvalue][degindex],distance_ref_1_[lastvalue-1],distance_ref_1_[lastvalue],deg_ref_1_[degindex-1],deg_ref_1_[degindex],step_width_interpolate_deg_*deg,y);}
 					material_sigma_.at(row).push_back(value);
-					if(deg == 0 || deg == 12){//std::cout<<y<<" "<<value<<" "<<distance_ref_1_[lastvalue]<<" "<<ref_material_1_[lastvalue-1][0]<<std::endl;
+					if(deg == 0){std::cout<<y<<" "<<value<<" "<<distance_ref_1_[lastvalue]<<" "<<ref_material_1_[lastvalue-1][degindex-1]<<" "<<ref_material_1_[lastvalue][degindex-1]<<" "<<ref_material_1_[lastvalue-1][degindex]<<" "<<std::endl;
 					}
 			}
 	    		row=row+1;}
@@ -254,7 +320,7 @@ void MaterialInterpolator::InterpolateIntensities(std::vector<double>& material_
     material_intensity_inter_.clear();
     int size=deg.size();
 
-    for(int degree=0;degree<90;degree=degree+step_width_interpolate_deg_){ 
+    for(double degree=0;degree<90;degree=degree+step_width_interpolate_deg_){ 
         bool found = false;
         for(int m=0;m<size;m++){     
             if(degree <= deg.at(m) && m == 0){
@@ -285,7 +351,7 @@ void MaterialInterpolator::PrintInterpolateIntensities(){
 
 std::vector<double> MaterialInterpolator::interpolated_deg(){
 	std::vector<double> toreturn;
-	for(int degree=0;degree<90;degree=degree+step_width_interpolate_deg_){ 
+	for(int degree=0;degree<maxdeg;degree=degree+step_width_interpolate_deg_){ 
 		toreturn.push_back(degree);
 	}
 	return toreturn;
@@ -297,7 +363,7 @@ std::vector<double> MaterialInterpolator::interpolated_distance(){
 	}	
 	return toreturn;
 }
-
+//only usable with 3rd Constructor!
 void MaterialInterpolator::Printrefmat1(){
 	std::cout<<"Ref material1 data"<<std::endl;
 	//print angles
@@ -316,7 +382,7 @@ void MaterialInterpolator::Printrefmat1(){
 void MaterialInterpolator::PrintpredictedMat(){
 	std::cout<<"Predicted material values"<<std::endl;
 	//print angles
-	for(int i=0;i<90;i=i+step_width_interpolate_deg_){
+	for(double i=0;i<maxdeg;i=i+step_width_interpolate_deg_){
 		std::cout<<i<<" ";
 	}
 	std::cout<<std::endl;
