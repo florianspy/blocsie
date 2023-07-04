@@ -7,7 +7,8 @@ ROS version: ROS melodic, Unity version: 2022.x (Perception package minimum vers
 
 ## ROS 
 ### ROS messages
-The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
+The source code for the ROS package containing for the two new ROS message definitions (Cammat.msg for depth cameras and Scanmat.msg for range sensor), which enables to send angle of hit, material, distance in one msg is in the ros_msg folder.
+It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
 
 catkin_make
 ### ROS Unity connection
