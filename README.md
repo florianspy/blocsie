@@ -39,7 +39,7 @@ catkin_make
 The connection between Unity and ROS requires building the following package ros_tcp_endpoint.
 1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
 2. catkin_make
-### usage 
+### ROS Unity connection - usage 
 roslaunch ros_tcp_endpoint endpoint.launch
 
 ## Lookup table generator 
