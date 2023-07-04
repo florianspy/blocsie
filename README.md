@@ -92,5 +92,5 @@ You will get two rosbags for each dataset, one with a constant standard deviatio
 
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
-Play the rosbags to your algorithm and ensure that they you write the outputs in the format timestamp, x, y,z, qx, qy, qz, qw (each separated by a whitespace). Next you can use h
+Play the rosbags to your algorithm and ensure that they you write the outputs in the format timestamp, x, y, z, qx, qy, qz, qw (each separated by a whitespace). Next you can use h
 ![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
