@@ -21,7 +21,9 @@ Further, the depth camera is accessible from here. It has the same options as th
 * The LIDAR can be adjusted at the Gameobject "sick." Here options such as minimum range, maximum range, start angle, angular range, scans per second, and total amount of rays can be set up. The LIDAR script publishes distance data on the topic set with the variable "lidar_topic", while on the topic set with "matandangtopic", the messages contain information about distance, material, and angle of hit.
 * Transformations can be found within the tf script (published topic set via tf_static), and the ground truth publisher is inside the Position Script (published topic: gt); both are directly attached to the Gameobject "robot".
 *  Wheel odometry is published via the wheel_odom script, and data is provided via the topic set via "odometrytop". It publishes the /clock topic. During each execution, the robot is moved to its next position, and physics steps are triggered. This script keeps track of the simulation time and ensures deterministic simulation. The transformation from odom to base_footprint is also published here. The script provides four different drive modes:
-  **
+* * 0: The script waits for geometry_msgs/Twist  message on the topic specified via cmdtop. This mode is for remote control via ROS.
+* * 1: The waypoints are hardcoded inside the wheel_odom script.
+* * 2: The robot will follow Pose data returned from the GameObject "targetPath". This should be 
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
