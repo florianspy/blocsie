@@ -17,7 +17,7 @@ https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and
 1. Select which scenario you want to use by selecting the specific scenario in the top left menu and turning off the others by right clicking and selecting "unload scene".
 2. Use the path creator object to specify the path through the environment as well as the speed.
 To make the robot follow the created path, select the robot and scroll to the script called wheel_odom. Now select from the path object you created the height object and choose it for the Target Path variable of the wheel_odom script. Additionally the variable automationdeg should be set to 2.
-3. Click on the Gameobject "robot" and adjust the sensors you want to use.
+3. Click on the Gameobject "robot" and adjust the sensors you want to use:
 * The camera sensors can be found below the Gameobject "d415".
      * The RGBcamera publishes an RGB image. The RGBcamera allows one to set the camera resolution (width and height via Script), the distortion parameters (k1, k2, k3, p1, p2 via Script), frame_id (via Script), frame rate (via Script), the name of the topics (published topics set via cameratopic, caminfotopic via the Script), the field of view (via the Script, the vertical field of view is calculated from the horizontal field of view depending on the image aspect ratio), and near and far clipping (via the Camera itself).
      * Three different variants of depth cameras publish depth images. They all have the same options as the RGBcamera.
