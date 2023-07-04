@@ -38,6 +38,7 @@ roslaunch ros_tcp_endpoint endpoint.launch
 
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
+### adjusting the source code
 Adopt now the mg.cpp file to generate the lookup table files you require. It already contains an example source code.
 * For simple interpolation (the case when all measurement data is available), use the constructor with nine arguments, where the last argument is a bool.
 * For the scaling prediction approach (applicable for the LDS), use the constructor with nine arguments, and ensure that the data in ref_material_1 in the first column is for 0 degrees.
@@ -49,6 +50,7 @@ g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 ### usage
 The compiled file does not provide user interaction as all the commands have to be done within the source code. To generate the files a simple run command is necessary.
 ./compiledfile
+
 ## Noise generator 
 The source code for the noise generator can be found in the noisegenerator folder. It requires the FileHandler from the modelgenerator folder. Before you use any rosbag from unity, ensure that you have run the python script rosbagwrite.py before, as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted, while output.bag will contain the sorted messages. The timestamps are only accesible with the python api, therefor, this python script is required.):
 
