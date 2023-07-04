@@ -48,7 +48,7 @@ Compile it via the following command:
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
 
 ## Noise generator 
-The source code for the noise generator can be found in the noisegenerator folder. It requires the FileHandler from the modelgenerator folder. Before you use any rosbag from unity, ensure that you have run the python script rosbagwrite.py before, as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted):
+The source code for the noise generator can be found in the noisegenerator folder. It requires the FileHandler from the modelgenerator folder. Before you use any rosbag from unity, ensure that you have run the python script rosbagwrite.py before, as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted, while output.bag will contain the sorted messages):
 
 python rosbagwrite.py input.bag output.bag
 ### adjusting the source code
