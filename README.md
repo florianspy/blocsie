@@ -1,5 +1,5 @@
 # BLOCSIE
-BLOCSIE - **B**enchmark for LOCalization in a Simulated Industrial Environment
+BLOCSIE - **B**enchmark for **LOC**alization in a **S**imulated **I**ndustrial **E**nvironment
 
 The project was tested to work with the following software versions:
 
