@@ -33,10 +33,11 @@ The connection between Unity and ROS requires building the following package ros
 2. catkin_make
 ### usage 
 roslaunch ros_tcp_endpoint endpoint.launch
+
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
 Adopt now the mg.cpp file to generate the lookup table files you require. It already contains an example source code.
-* For simple interpolation (the case when all measurement data is available), use the constructor with nine arguments and the last argument being a bool.
+* For simple interpolation (the case when all measurement data is available), use the constructor with nine arguments, where the last argument is a bool.
 * For the scaling prediction approach (applicable for the LDS), use the constructor with nine arguments, and ensure that the data in ref_material_1 in the first column is for 0 degrees.
 * For the offset approach (applicable for the SICK TIM 561), use the constructor with fourteen arguments, and ensure that the data in ref_material_1, and ref_material_2 in the first column are both times for 0 degrees.
 ### compiling
