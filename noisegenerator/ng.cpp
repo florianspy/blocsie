@@ -33,7 +33,7 @@ int main(int argc, char* argv[]){
 	std::string lidaroutputtopic = "/scan_front";
 	std::string setting1 = outputPath + "";
 	mkdir(setting1.c_str(),0777);
-	RGB subpub = RGB();
+	RGB rgbcam = RGB();
 	int amount_of_materials_dcam=4;
 	int deg_step_width_dcam;// degrees between two values in the lookup table
 	double dist_step_width_dcam;//distance in m between two values in the lookup table
@@ -71,7 +71,7 @@ int main(int argc, char* argv[]){
     	foreach(rosbag::MessageInstance const msg, viewIn){
 		 if(msg.getTopic()==caminfo[0]){
 		       const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
-		       subpub.caminfo(inf);
+		       rgbcam.caminfo(inf);
 		}  
 		if(msg.getTopic()==depthcaminfo[0]){
                		const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
@@ -104,8 +104,8 @@ int main(int argc, char* argv[]){
 				}
 				else if(msg.getTopic()==imgtopics[0]){
 					sensor_msgs::ImageConstPtr imsg = msg.instantiate<sensor_msgs::Image>();
-					bagOut.write(msg.getTopic(), imsg->header.stamp,subpub.camimg(imsg));
-					bagOut2.write(msg.getTopic(), imsg->header.stamp,subpub.camimg(imsg));
+					bagOut.write(msg.getTopic(), imsg->header.stamp,rgbcam.camimg(imsg));
+					bagOut2.write(msg.getTopic(), imsg->header.stamp,rgbcam.camimg(imsg));
 				}
 				else if(msg.getTopic()==depthtopics[0]){
 					lidarmatmsg::Cammat::ConstPtr imsg = msg.instantiate<lidarmatmsg::Cammat>();
