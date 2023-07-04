@@ -23,7 +23,8 @@ Further, the depth camera is accessible from here. It has the same options as th
 *  Wheel odometry is published via the wheel_odom script, and data is provided via the topic set via "odometrytop". It publishes the /clock topic. During each execution, the robot is moved to its next position, and physics steps are triggered. This script keeps track of the simulation time and ensures deterministic simulation. The transformation from odom to base_footprint is also published here. The script provides four different drive modes:
      * 0: The script waits for geometry_msgs/Twist  message on the topic specified via cmdtop. This mode is for remote control via ROS.
      * 1: The waypoints are hardcoded inside the wheel_odom script.
-     * 2: The robot will follow Pose data returned from the GameObject "targetPath". This should be 
+     * 2: The robot will follow the Pose data of the GameObject "targetPath". This Gameobject follows the terrain.
+     * 3: The robot will follow the data provided a txt file containing position data. Adapt the file odometry_from_txt.cs to change the path to the file.
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
