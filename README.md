@@ -23,7 +23,7 @@ Further, the depth camera is accessible from here. It has the same options as th
 *  Wheel odometry is published via the wheel_odom script, and data is provided via the topic set via "odometrytop". It publishes the /clock topic. During each execution, the robot is moved to its next position, and physics steps are triggered. This script keeps track of the simulation time and ensures deterministic simulation. The transformation from odom to base_footprint is also published here.
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 ## Evaluation
-The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains a usage description.
+The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
 ## ROS 
 ### ROS messages
 The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
