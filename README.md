@@ -1,7 +1,9 @@
 # BLOCSIE
 BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
+The Project was tested with the following software versions:
+Unity version: 2022.x (Perception package minimum version is 2021.x, ROS version: ROS melodic.
+
 ## Unity package
-The required Unity version is 2022.x, the required ROS version is ROS melodic
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 
 ### installation
