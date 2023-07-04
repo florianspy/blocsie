@@ -15,11 +15,11 @@ https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and
 1. Select which scenario you want to use by selecting the specific scenario in the top left menu and turning off the others.
 2. Use the path creator object to specify the path through the environment as well as the speed.
 To make the robot follow the created path, select the robot and scroll to the script called wheel_odom. Now select from the path object you created the height object and choose it for the Target Path variable of the wheel_odom script. 
-3. click on the robot Gameobject and adjust the sensors you want to use.
+3. Click on the Gameobject "robot" and adjust the sensors you want to use.
 * The camera sensor(s) can be found below the Gameobject "d415". It allows one to set the camera resolution (via Script), the distortion parameters (via Script), frame_id (via Script), frame rate (via Script), the name of the topics (published topics set via cameratopic, caminfotopic via the Script), the field of view (via the Camera itself), and near and far clipping (via the Camera itself).
 Further, the depth camera is accessible from here. It has the same options as the camera object. The depth camera, which publishes the material and angle of hit information, is available here (published topics set via cameratopic, caminfotopic).
 * The LIDAR can be adjusted at the Gameobject "sick." Here options such as minimum range, maximum range, start angle, angular range, scans per second, and total amount of rays can be set up. The LIDAR script publishes distance data on the topic set with the variable "lidar_topic", while on the topic set with "matandangtopic", the messages contain information about distance, material, and angle of hit.
-* Transformations can be found within the tf script (published topic set via tf_static), and the ground truth publisher is inside the Position Script (published topic: gt); both are directly attached to the Robot Gameobject.
+* Transformations can be found within the tf script (published topic set via tf_static), and the ground truth publisher is inside the Position Script (published topic: gt); both are directly attached to the Gameobject "robot".
 *  Wheel odometry is published via the wheel_odom script, and data is provided via the topic set via "odometrytop". It publishes the /clock topic. During each execution, the robot is moved to its next position, and physics steps are triggered. This script keeps track of the simulation time and ensures deterministic simulation. The transformation from odom to base_footprint is also published here.
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 ## Evaluation
