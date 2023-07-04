@@ -3,7 +3,19 @@ BLOCSIE - Benchmark for LOCalization in a Simulated Industrial Environment
 
 The Project was tested with the following software versions:
 
-Unity version: 2022.x (Perception package minimum version is 2021.x), ROS version: ROS melodic.
+ROS version: ROS melodic, Unity version: 2022.x (Perception package minimum version is 2021.x)
+
+## ROS 
+### ROS messages
+The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
+
+catkin_make
+### ROS Unity connection
+The connection between Unity and ROS requires building the following package ros_tcp_endpoint.
+1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
+2. catkin_make
+### ROS Unity connection - usage 
+roslaunch ros_tcp_endpoint endpoint.launch
 
 ## Unity package
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
@@ -32,17 +44,7 @@ The depth camera (DepthAngleMaterialChannel.cs), which publishes the material an
      * 3: The robot will follow the data provided in a txt file containing position data. Adapt the file odometry_from_txt.cs to change the path to the file.
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
 
-## ROS 
-### ROS messages
-The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
 
-catkin_make
-### ROS Unity connection
-The connection between Unity and ROS requires building the following package ros_tcp_endpoint.
-1. Download the package from  https://github.com/Unity-Technologies/ROS-TCP-Endpoint into your catkin_ws/src folder
-2. catkin_make
-### ROS Unity connection - usage 
-roslaunch ros_tcp_endpoint endpoint.launch
 
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
