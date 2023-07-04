@@ -19,7 +19,6 @@ roslaunch ros_tcp_endpoint endpoint.launch
 
 ## Unity package
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
-
 ### installation
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
@@ -79,14 +78,10 @@ Inside ng.cpp file, the values of the following variables need to be adjusted to
 * path_to_res == the path to the lookup table files
 * ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
-
 ### compiling
-
 Compile it via the following command replace pathtoFileHandlercpp with the path you stored the modelgenerator:
-
 1. g++  -I/opt/ros/melodic/include -I/home/catkin_ws/devel/include/lidarmatmsg -I/home/catkin_ws/src/interpolate/src -Ofast -g3 -c -Wall -fmessage-length=0 -std=c++14 -MMD -MP -MF  -c ng.cpp pathtoFileHandlercpp/FileHandler.cpp  -march=native
-2. g++ -L/opt/ros/melodic/lib -L/opt/ros/melodic/lib/x86_64-linux-gnu -o "ng" ./ng.o ./FileHandler.o  -ltf2 -ltf -lxmlrpcpp -lcpp_common -lrosconsole_log4cxx -lroscpp_serialization -lopencv_calib3d -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lmessage_filters -lrostime -lroscpp -lboost_filesystem -lboost_system -lcv_bridge -lrosconsole_backend_interface -lrosconsole -ltf2_ros -lpthread -lboost_thread -lgsl -lgslcblas -lrosbag  -lm -lrt -ldl -lconsole_bridge  -lrosbag_storage -lcv_bridge -lopencv_core -lopencv_imgproc  -march=native
-   
+2. g++ -L/opt/ros/melodic/lib -L/opt/ros/melodic/lib/x86_64-linux-gnu -o "ng" ./ng.o ./FileHandler.o  -ltf2 -ltf -lxmlrpcpp -lcpp_common -lrosconsole_log4cxx -lroscpp_serialization -lopencv_calib3d -lopencv_core -lopencv_highgui -lopencv_imgcodecs -lmessage_filters -lrostime -lroscpp -lboost_filesystem -lboost_system -lcv_bridge -lrosconsole_backend_interface -lrosconsole -ltf2_ros -lpthread -lboost_thread -lgsl -lgslcblas -lrosbag  -lm -lrt -ldl -lconsole_bridge  -lrosbag_storage -lcv_bridge -lopencv_core -lopencv_imgproc  -march=native   
 ### usage
 The compiled file can then be used in the following way (sorted.bag is the rosbag that contains your data, outputfolder is the folder where the results are written to, amountofdatasets are the number of datasets that should be created utilizing continuously the same random number generator):
 
@@ -97,3 +92,4 @@ You will get two rosbags for each dataset, one with a constant standard deviatio
 ## Evaluation
 The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
 ![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
+Play the rosbags to your algorithm and ensure that they you write the outputs in the format timestamp, x, y,z, qx, qy, qz, qw (each separated by a whitespace). Next you can use h
