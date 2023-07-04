@@ -29,8 +29,7 @@ The depth camera (DepthAngleMaterialChannel.cs), which publishes the material an
      * 2: The robot will follow the Pose data of the GameObject "targetPath". This Gameobject follows the terrain.
      * 3: The robot will follow the data provided a txt file containing position data. Adapt the file odometry_from_txt.cs to change the path to the file.
 4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
-## Evaluation
-The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
+
 ## ROS 
 ### ROS messages
 The source code for the ROS package containing the ROS message definition for transmitting angle, material, distance in one msg is in the ros_msg folder. It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
@@ -89,4 +88,6 @@ The compiled file can then be used in the following way (input.bag is the rosbag
 
 You will get two rosbags for each dataset, one with a constant standard deviation (noise-conststd) and one using the data-driven model to create the noise (noise-datastd).
 
+## Evaluation
+The scripts for the evaluation can be downloaded from the following page https://github.com/florianspy/locchallbench/tree/main/gui. The github page contains the installation and the usage description.
 ![logo-color](https://github.com/florianspy/blocsie/assets/39183098/504c376e-401c-45a2-a8a5-c388fd32ef49)
