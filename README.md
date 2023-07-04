@@ -42,9 +42,7 @@ The depth camera (DepthAngleMaterialChannel.cs), which publishes the material an
      * 1: The waypoints are hardcoded inside "wheel_odom.cs".
      * 2: The robot will follow the Pose data of the GameObject "targetPath". This Gameobject follows the terrain.
      * 3: The robot will follow the data provided in a txt file containing position data. Adapt the file odometry_from_txt.cs to change the path to the file.
-4. Before you click on the play button to start the simulation, ensure that the ROS side is already running and you already started the recording of the rosbag.
-
-
+4. Before you click on the play button to start the simulation, ensure that the ros_tcp_endpoint side is already running and you started the recording of the rosbag.
 
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
