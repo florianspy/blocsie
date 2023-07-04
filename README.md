@@ -55,6 +55,7 @@ Adopt now the mg.cpp file to generate the lookup table files you require. It alr
 * For simple interpolation (the case when all measurement data is available and data at the specified distance and degree intervals is to be interpolated from these values), use the constructor with nine arguments, where the last argument is a bool.
 * For the scaling prediction approach (applicable for the LDS), use the constructor with nine arguments, and ensure that the data in ref_material_1 in the first column is for 0 degrees.
 * For the offset approach (applicable for the SICK TIM 561), use the constructor with fourteen arguments, and ensure that the data in ref_material_1, and ref_material_2 in the first column are both times for 0 degrees.
+* For simple interpolation of wheel odometry  (the case when all measurement data is available a), use the constructor with six arguments. Here the first column does not need to contain data for &mu=0. The data will be interpolated starting at &mu=0 and velocity=0.
 ### compiling
 Compile it via the following command:
 
