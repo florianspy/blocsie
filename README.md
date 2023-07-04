@@ -7,7 +7,7 @@ ROS version: ROS melodic, Unity version: 2022.x (Perception package minimum vers
 
 ## ROS 
 ### ROS messages
-The source code for the ROS package containing the two new ROS message definitions (Cammat.msg for depth cameras and Scanmat.msg for range sensor), which enables to send angle of hit, material, distance in one msg is in the ros_msg folder (The material is encoded as uint8 in the Cammat.msg instead of int32 as the Cammat.msg contains depth information for an image (for example, 1920x1080 datapoints),  which requires significantly more data for transmission than a range reading (for example, 811 datapoints). However, uint8 can hold up to 255 different materials, which is enough for our use case.)
+The source code for the ROS package containing the two new ROS message definitions (Cammat.msg for depth cameras and Scanmat.msg for range sensor), which enables to send angle of hit, material, and distance in one message, can be found in the ros_msg folder. (The material is encoded as uint8 in the Cammat.msg instead of int32 as the Cammat.msg contains depth information for an image (for example, 1920x1080 datapoints),  which requires significantly more data for transmission than a range reading (for example, 811 datapoints). However, uint8 can hold up to 255 different materials, which is enough for our use case.)
 It is a prerequisite for the noise generator. Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
 
 catkin_make
@@ -23,7 +23,7 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 ### installation
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
-* Download unity project from
+* Download unity package from
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity
 * Ensure that you are using Vulkan as graphics api which can be set under Project Settings->Player->Disable "Auto Graphics API for ". Then at "Graphics APIs for " drag Vulkan to the top of the list.
 * Ensure that under Project Settings->Physics->Simulation Mode is set to Script.
