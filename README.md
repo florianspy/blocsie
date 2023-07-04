@@ -27,7 +27,7 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport and install package in Unity
 * Ensure that you are using Vulkan as graphics api which can be set under Project Settings->Player->Disable "Auto Graphics API for ". Then at "Graphics APIs for " drag Vulkan to the top of the list.
 * Ensure that under Project Settings->Physics->Simulation Mode is set to Script.
-* Our simulation was optimized for a FixedUpdate time of 0.02 seconds (Time between two FixedUpdate calls = time between two simulation steps). Set this value at Project Settings->Time->Fixed Timestamp. Lower values can lead to significant performance drops as within 0.02 seconds all the scripts need to be executed.
+* Our simulation was optimized for a FixedUpdate time of 0.02 seconds (Time between two FixedUpdate calls = time between two simulation steps). Set this value at Project Settings->Time->Fixed Timestamp. Lower values can lead to significant performance drops as within the FixedUpdate timestamp all the scripts need to be executed.
 ### usage
 1. Select which scenario you want to use by selecting the specific scenario in the top left menu and turning off the others by right clicking and selecting "unload scene".
 2. Use the path creator object to specify the path through the environment as well as the speed.
