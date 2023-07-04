@@ -46,7 +46,9 @@ Adopt now the mg.cpp file to generate the lookup table files you require. It alr
 Compile it via the following command:
 
 g++ FileHandler.cpp MaterialInterpolator.cpp mg.cpp
-
+### usage
+The compiled file does not provide user interaction as all the commands have to be done within the source code. To generate the files a simple run command is necessary.
+./compiledfile
 ## Noise generator 
 The source code for the noise generator can be found in the noisegenerator folder. It requires the FileHandler from the modelgenerator folder. Before you use any rosbag from unity, ensure that you have run the python script rosbagwrite.py before, as it will write the messages into the rosbag according to the message time stamps and not the arrival time during recording. It is used with the following syntax (replace input.bag with the name of the bag you want the timestamps to be sorted, while output.bag will contain the sorted messages. The timestamps are only accesible with the python api, therefor, this python script is required.):
 
