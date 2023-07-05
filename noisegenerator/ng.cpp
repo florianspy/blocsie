@@ -36,17 +36,17 @@ int main(int argc, char* argv[]){
 	max_range_lidar=reader.row_info_vec().back();
 	max_deg_lidar=reader.col_info_vec().back();	
 	RangeSensor lidar=RangeSensor(dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
-    std::vector<std::string> lidarmatandangtopics;
+	std::vector<std::string> lidarmatandangtopics;
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda2"));
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda"));
-    std::vector<std::string> lidaroutputtopics;
+	std::vector<std::string> lidaroutputtopics;
 	lidaroutputtopics.push_back(std::string("/scan_front2"));
 	lidaroutputtopics.push_back(std::string("/scan_front"));
 	std::string setting1 = outputPath + "";
 	mkdir(setting1.c_str(),0777);
-	std::vector<RGB> colorcam;
-	colorcam.push_back(RGB());
-	colorcam.push_back(RGB());
+	std::vector<RGB> colorcams;
+	colorcams.push_back(RGB());
+	colorcams.push_back(RGB());
 	int amount_of_materials_dcam=4;
 	int deg_step_width_dcam;// degrees between two values in the lookup table
 	double dist_step_width_dcam;//distance in m between two values in the lookup table
@@ -57,18 +57,18 @@ int main(int argc, char* argv[]){
 	max_range_dcam=reader.row_info_vec().back();
 	max_deg_dcam=reader.col_info_vec().back();
 	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_range_dcam,max_deg_dcam);
-	std::vector<std::string> caminfo;
-	caminfo.push_back(std::string("/cam_info2"));  
-	caminfo.push_back(std::string("/cam_info"));  
+	std::vector<std::string> caminfos;
+	caminfos.push_back(std::string("/cam_info2"));  
+	caminfos.push_back(std::string("/cam_info"));  
 	std::vector<std::string> imgtopics;
 	imgtopics.push_back(std::string("/camera/color/image_raw2"));	
 	imgtopics.push_back(std::string("/camera/color/image_raw"));	
 	std::vector<std::string> depthtopics;
 	depthtopics.push_back(std::string("/depth"));	
 	depthtopics.push_back(std::string("/depth2"));	
-	std::vector<std::string> depthcaminfo;
-	depthcaminfo.push_back(std::string("/caminfo2"));  
-	depthcaminfo.push_back(std::string("/caminfo"));  
+	std::vector<std::string> depthcaminfos;
+	depthcaminfos.push_back(std::string("/caminfo2"));  
+	depthcaminfos.push_back(std::string("/caminfo"));  
 	lidar.insert_datamodel_matdata(0,reader.file_data());
 	depthcam.insert_datamodel_matdata(0,reader.file_data());
 	reader.ReadFile(path_to_model+"SICK_grey_interpolate.txt");
@@ -90,11 +90,11 @@ int main(int argc, char* argv[]){
 	bagIn.open(bagPath, rosbag::bagmode::Read);
 	rosbag::View viewIn(bagIn);
     	foreach(rosbag::MessageInstance const msg, viewIn){
-		int res =compare(msg.getTopic(),caminfo);
-		int res2 =compare(msg.getTopic(),depthcaminfo);
+		int res =compare(msg.getTopic(),caminfos);
+		int res2 =compare(msg.getTopic(),depthcaminfos);
 		if(res){
 		       const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
-		       colorcam[res-1].caminfo(inf);
+		       colorcams[res-1].caminfo(inf);
 		}  
 		if(res2){
 		       const sensor_msgs::CameraInfoPtr& inf = msg.instantiate<sensor_msgs::CameraInfo>();
@@ -134,8 +134,8 @@ int main(int argc, char* argv[]){
 				}
 				else if(res){
 					sensor_msgs::ImageConstPtr imsg = msg.instantiate<sensor_msgs::Image>();
-					bagOut.write(msg.getTopic(), imsg->header.stamp,colorcam[res-1].camimg(imsg));
-					bagOut2.write(msg.getTopic(), imsg->header.stamp,colorcam[res-1].camimg(imsg));
+					bagOut.write(msg.getTopic(), imsg->header.stamp,colorcams[res-1].camimg(imsg));
+					bagOut2.write(msg.getTopic(), imsg->header.stamp,colorcams[res-1].camimg(imsg));
 				}
 				else if(res2){
 					lidarmatmsg::Cammat::ConstPtr imsg = msg.instantiate<lidarmatmsg::Cammat>();
@@ -151,5 +151,5 @@ int main(int argc, char* argv[]){
 			bagOut.close();
 			bagOut2.close();
 	}
-    	return 0;
+	return 0;
 }
