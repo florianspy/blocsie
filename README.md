@@ -43,7 +43,7 @@ The depth camera (DepthAngleMaterialChannel.cs), which publishes the material an
 * Transformations can be found within the tf script (published topic set via tf_static). The ground truth publisher is inside the Position Script (published topic: gt) and provides the data in form of a PoseStampedMsg, which combines a pose (translation and rotation information) and a timestamp. Both scripts are directly attached to the Gameobject "robot".
 *  Wheel odometry is published via "wheel_odom.cs", and data is provided via the topic set via "odometrytop". It publishes the /clock topic. During each execution, the robot is moved to its next position, and physics steps are triggered. This script keeps track of the simulation time and ensures deterministic simulation. The transformation from "odom" to "base_footprint" is also published on the topic specified by "tftopic". The frame_id and the child_id are set in the function InitializeMessage(). The script provides four different drive modes:
      * 0: The script waits for geometry_msgs/Twist  message on the topic specified via "cmdtop". This mode is for remote control via ROS.
-     * 1: The waypoints are hardcoded inside "wheel_odom.cs".
+     * 1: The robot follows waypoints hardcoded inside "wheel_odom.cs".
      * 2: The robot will follow the Pose data of the GameObject "targetPath". This Gameobject follows the terrain.
      * 3: The robot will follow the data provided in a txt file containing position data. Adapt the file odometry_from_txt.cs to change the path to the file.
 4. Before you click on the play button to start the simulation, ensure that the ros_tcp_endpoint side is already running and you started the recording of the rosbag.
