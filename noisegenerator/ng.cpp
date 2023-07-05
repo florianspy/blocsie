@@ -22,20 +22,20 @@ int main(int argc, char* argv[]){
 	std::string outputPath = argv[2];
 	//amount of bags you want to create
 	int numSamples = atoi(argv[3]);
-	int amount_of_materials_lidar=4;
-	int deg_step_width_lidar;// degrees between two values in the lookup table
-	double dist_step_width_lidar;//distance in m between two values in the lookup table
-	double max_range_lidar;// maximum value of the distance in lookup table
-	int max_deg_lidar;// maximum value of the degree in lookup table
+	int amount_of_materials_range=4;
+	int deg_step_width_range;// degrees between two values in the lookup table
+	double dist_step_width_range;//distance in m between two values in the lookup table
+	double max_range_range;// maximum value of the distance in lookup table
+	int max_deg_range;// maximum value of the degree in lookup table
 	double conststd=0.02;
 	//get the data from data model and fill it in
  	std::string path_to_model = static_cast<std::string>("/home/catkin_ws/src/interpolate/src/");
 	FileHandler reader(path_to_model+"SICK_white_interpolate.txt", ' ', ':');
-	deg_step_width_lidar = ReturnDiff(reader.col_info_vec());
-	dist_step_width_lidar = ReturnDiff(reader.row_info_vec());
-	max_range_lidar=reader.row_info_vec().back();
-	max_deg_lidar=reader.col_info_vec().back();	
-	RangeSensor lidar=RangeSensor(dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
+	deg_step_width_range = ReturnDiff(reader.col_info_vec());
+	dist_step_width_range = ReturnDiff(reader.row_info_vec());
+	max_range_range=reader.row_info_vec().back();
+	max_deg_range=reader.col_info_vec().back();	
+	RangeSensor lidar=RangeSensor(dist_step_width_range,deg_step_width_range,amount_of_materials_range,max_range_range,max_deg_range,conststd);	
 	std::vector<std::string> lidarmatandangtopics;
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda2"));
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda"));
