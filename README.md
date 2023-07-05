@@ -76,7 +76,7 @@ Inside ng.cpp file, the values of the following variables need to be adjusted to
 * depthcaminfos ==  List of the corresponding camera_info topic(s) to the Cammat message
 * imgtopics == List of the topic(s) containing RGB image messages
 * caminfos == List of the corresponding camera_info topic(s) to the RGB image message
-* amount_of_materials_sensor == amount of materials = amount of lookup tables for this sensor (sensor is dcam for the depthcamera and lidar for the rangesensor)
+* amount_of_materials_sensor == amount of lookup tables for this sensor (sensor can be dcam for the depthcamera or range for the rangesensor)
 * path_to_model == the path to the lookup table files
 * ReadFile == change all the commands to match the lookup table files you want to use
 * conststd == constant standard deviation value (only applied for lidar)
