@@ -29,17 +29,17 @@ int main(int argc, char* argv[]){
 	int max_deg_lidar;// maximum value of the degree in lookup table
 	double conststd=0.02;
 	//get the data from data model and fill it in
- 	std::string path_to_res = static_cast<std::string>("/home/catkin_ws/src/interpolate/src/");
-	FileHandler reader(path_to_res+"SICK_white_interpolate.txt", ' ', ':');
+ 	std::string path_to_model = static_cast<std::string>("/home/catkin_ws/src/interpolate/src/");
+	FileHandler reader(path_to_model+"SICK_white_interpolate.txt", ' ', ':');
 	deg_step_width_lidar = ReturnDiff(reader.col_info_vec());
 	dist_step_width_lidar = ReturnDiff(reader.row_info_vec());
 	max_range_lidar=reader.row_info_vec().back();
 	max_deg_lidar=reader.col_info_vec().back();	
 	RangeSensor lidar=RangeSensor(dist_step_width_lidar,deg_step_width_lidar,amount_of_materials_lidar,max_range_lidar,max_deg_lidar,conststd);	
-	std::vector<std::string> lidarmatandangtopics;
+    std::vector<std::string> lidarmatandangtopics;
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda2"));
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda"));
-	std::vector<std::string> lidaroutputtopics;
+    std::vector<std::string> lidaroutputtopics;
 	lidaroutputtopics.push_back(std::string("/scan_front2"));
 	lidaroutputtopics.push_back(std::string("/scan_front"));
 	std::string setting1 = outputPath + "";
@@ -71,13 +71,13 @@ int main(int argc, char* argv[]){
 	depthcaminfo.push_back(std::string("/caminfo"));  
 	lidar.insert_datamodel_matdata(0,reader.file_data());
 	depthcam.insert_datamodel_matdata(0,reader.file_data());
-	reader.ReadFile(path_to_res+"SICK_grey_interpolate.txt");
+	reader.ReadFile(path_to_model+"SICK_grey_interpolate.txt");
 	lidar.insert_datamodel_matdata(1,reader.file_data());
 	depthcam.insert_datamodel_matdata(1,reader.file_data());
-	reader.ReadFile(path_to_res+"SICK_black_interpolate.txt");
+	reader.ReadFile(path_to_model+"SICK_black_interpolate.txt");
 	lidar.insert_datamodel_matdata(2,reader.file_data());
 	depthcam.insert_datamodel_matdata(2,reader.file_data());
-	reader.ReadFile(path_to_res+"SICK_alu_interpolate.txt");
+	reader.ReadFile(path_to_model+"SICK_alu_interpolate.txt");
 	lidar.insert_datamodel_matdata(3,reader.file_data());
 	depthcam.insert_datamodel_matdata(3,reader.file_data());
 	std::vector<DepthCam> depthcams;
