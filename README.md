@@ -73,9 +73,9 @@ Inside ng.cpp file, the values of the following variables need to be adjusted to
 * lidarmatandangtopics == List of the topic(s) containing Scanmat message(s) comprising distance, material, and angle information
 * lidaroutputtopics == List of the topic(s) where range sensor data with noise should be written into
 * depthtopics == List of the topic(s) containing Cammat message(s) comprising depth, material, and angle information
-* depthcaminfo == the corresponding camera_info topic(s) to the Cammat message
-* imgtopics == List of the topic(s) containing RGB ros image messages
-* caminfo == the corresponding camera_info topic(s) to the RGB ros image message
+* depthcaminfo ==  List of the corresponding camera_info topic(s) to the Cammat message
+* imgtopics == List of the topic(s) containing RGB image messages
+* caminfo == List of the corresponding camera_info topic(s) to the RGB image message
 * amount_of_materials_sensor == amount of materials = amount of lookup tables for this sensor (sensor is dcam for the depthcamera and lidar for the rangesensor)
 * path_to_model == the path to the lookup table files
 * ReadFile == change all the commands to match the lookup table files you want to use
