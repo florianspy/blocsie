@@ -25,7 +25,7 @@ int main(int argc, char* argv[]){
 	int amount_of_materials_range=4;
 	int deg_step_width_range;// degrees between two values in the lookup table
 	double dist_step_width_range;//distance in m between two values in the lookup table
-	double max_range_range;// maximum value of the distance in lookup table
+	double max_dist_range;// maximum value of the distance in lookup table
 	int max_deg_range;// maximum value of the degree in lookup table
 	double conststd=0.02;
 	//get the data from data model and fill it in
@@ -33,9 +33,9 @@ int main(int argc, char* argv[]){
 	FileHandler reader(path_to_model+"SICK_white_interpolate.txt", ' ', ':');
 	deg_step_width_range = ReturnDiff(reader.col_info_vec());
 	dist_step_width_range = ReturnDiff(reader.row_info_vec());
-	max_range_range=reader.row_info_vec().back();
+	max_dist_range=reader.row_info_vec().back();
 	max_deg_range=reader.col_info_vec().back();	
-	RangeSensor lidar=RangeSensor(dist_step_width_range,deg_step_width_range,amount_of_materials_range,max_range_range,max_deg_range,conststd);	
+	RangeSensor lidar=RangeSensor(dist_step_width_range,deg_step_width_range,amount_of_materials_range,max_dist_range,max_deg_range,conststd);	
 	std::vector<std::string> lidarmatandangtopics;
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda2"));
 	lidarmatandangtopics.push_back(std::string("/scan_frontmanda"));
@@ -50,13 +50,13 @@ int main(int argc, char* argv[]){
 	int amount_of_materials_dcam=4;
 	int deg_step_width_dcam;// degrees between two values in the lookup table
 	double dist_step_width_dcam;//distance in m between two values in the lookup table
-	double max_range_dcam;// maximum value of the distance in lookup table
+	double max_dist_dcam;// maximum value of the distance in lookup table
 	int max_deg_dcam;// maximum value of the degree in lookup table
 	deg_step_width_dcam = ReturnDiff(reader.col_info_vec());
 	dist_step_width_dcam = ReturnDiff(reader.row_info_vec());
-	max_range_dcam=reader.row_info_vec().back();
+	max_dist_dcam=reader.row_info_vec().back();
 	max_deg_dcam=reader.col_info_vec().back();
-	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_range_dcam,max_deg_dcam);
+	DepthCam depthcam = DepthCam(dist_step_width_dcam,deg_step_width_dcam,amount_of_materials_dcam,max_dist_dcam,max_deg_dcam);
 	std::vector<std::string> caminfos;
 	caminfos.push_back(std::string("/cam_info2"));  
 	caminfos.push_back(std::string("/cam_info"));  
