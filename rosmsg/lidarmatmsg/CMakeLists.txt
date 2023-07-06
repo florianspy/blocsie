@@ -8,7 +8,6 @@ project(lidarmatmsg)
 
   # Declare the message files to be built
   add_message_files(FILES
-    mat.msg
     Scanmat.msg
     Cammat.msg
   )
