@@ -36,12 +36,12 @@ int main(int argc, char* argv[]){
 	max_dist_range=reader.row_info_vec().back();
 	max_deg_range=reader.col_info_vec().back();	
 	RangeSensor lidar=RangeSensor(dist_step_width_range,deg_step_width_range,amount_of_materials_range,max_dist_range,max_deg_range,conststd);	
-	std::vector<std::string> lidarmatandangtopics;
-	lidarmatandangtopics.push_back(std::string("/scan_frontmanda2"));
-	lidarmatandangtopics.push_back(std::string("/scan_frontmanda"));
-	std::vector<std::string> lidaroutputtopics;
-	lidaroutputtopics.push_back(std::string("/scan_front2"));
-	lidaroutputtopics.push_back(std::string("/scan_front"));
+	std::vector<std::string> rangematandangtopics;
+	rangematandangtopics.push_back(std::string("/scan_frontmanda2"));
+	rangematandangtopics.push_back(std::string("/scan_frontmanda"));
+	std::vector<std::string> rangeoutputtopics;
+	rangeoutputtopics.push_back(std::string("/scan_front2"));
+	rangeoutputtopics.push_back(std::string("/scan_front"));
 	std::string setting1 = outputPath + "";
 	mkdir(setting1.c_str(),0777);
 	std::vector<RGB> colorcams;
@@ -122,12 +122,12 @@ int main(int argc, char* argv[]){
 				}
 				res =compare(msg.getTopic(),imgtopics);
 				res2 =compare(msg.getTopic(),depthtopics);
-				res3 =compare(msg.getTopic(),lidarmatandangtopics);
-				res4 =compare(msg.getTopic(),lidaroutputtopics);
+				res3 =compare(msg.getTopic(),rangematandangtopics);
+				res4 =compare(msg.getTopic(),rangeoutputtopics);
 				if(res3){					
 					lidarmatmsg::Scanmat::ConstPtr msgPtr = msg.instantiate<lidarmatmsg::Scanmat>();
-					bagOut.write(lidaroutputtopics[res3-1], msgPtr->header.stamp,rangesens[res3-1].GenerateConstStdMsg(msgPtr));
-					bagOut2.write(lidaroutputtopics[res3-1],msgPtr->header.stamp,rangesens[res3-1].GenerateDataDrivenStdMsg(msgPtr));
+					bagOut.write(rangeoutputtopics[res3-1], msgPtr->header.stamp,rangesens[res3-1].GenerateConstStdMsg(msgPtr));
+					bagOut2.write(rangeoutputtopics[res3-1],msgPtr->header.stamp,rangesens[res3-1].GenerateDataDrivenStdMsg(msgPtr));
 				}
 				else if(res4){
 					
