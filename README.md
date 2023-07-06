@@ -18,7 +18,7 @@ The connection between Unity and ROS requires building the following package ros
 ### ROS Unity connection - usage 
 roslaunch ros_tcp_endpoint endpoint.launch
 
-## Unity package
+## Unity
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ### installation
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
