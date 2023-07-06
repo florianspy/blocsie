@@ -55,7 +55,6 @@ public:
 	   vector<boost::random::poisson_distribution<int>> bpd;
 	   float nla=na;
 	   float m;
-	   bool first=true;
 	   for(int i=1;i<256;i++){
 		   m= (i/(nla));
 		   enginevec.push_back(boost::taus88());
@@ -82,10 +81,8 @@ public:
 	   int k=0;
 	   int x=0;
 	   int y=0;
-	   int total=0;
 	   std::chrono::steady_clock::time_point begin1 = std::chrono::steady_clock::now();
 	   std::chrono::steady_clock::time_point end1 = std::chrono::steady_clock::now();
-	   auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(begin1);
 	   begin1 = std::chrono::steady_clock::now();
 	   int start = (tid * img_ptr->image.rows/NUM_THREADS);
 	   int end = (start + img_ptr->image.rows/NUM_THREADS);
@@ -99,9 +96,6 @@ public:
 					    if(z!= 0){
 						   //https://stackoverflow.com/questions/2078474/how-to-use-boost-normal-distribution-classes
 						   ptr[x][k]=sqb*var_nor()+vdlist[z-1]()*nla;
-						   if(first == true){first=false;
-							std::cout<<(int)ptr[x][k]<<" "<<tid<<std::endl;
-						   }
 					    }
 					    else{
 							ptr[x][k]+=sqb*var_nor();
@@ -111,7 +105,7 @@ public:
 			    }
 			}
 		   end1 = std::chrono::steady_clock::now();
-		   std::cout << "It took thread"<<tid<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(now_ms.time_since_epoch()).count()<<" " << std::chrono::duration_cast<std::chrono::microseconds>(end1 - begin1).count() << "[µs]" << std::endl;
+		   //std::cout << "It took thread"<<tid<<" "<<std::chrono::duration_cast<std::chrono::milliseconds>(now_ms.time_since_epoch()).count()<<" " << std::chrono::duration_cast<std::chrono::microseconds>(end1 - begin1).count() << "[µs]" << std::endl;
 	   }
 	   else{
 		   for (y = start; y < end;y++){
@@ -524,15 +518,15 @@ public:
 		return true;
 	}
 private:
-    //for depth
-    Mat dmap_x,dmap_y;
-    Mat depthimage;
-    //distortion coefficients required to recognize changes in distortion coefficients
-    float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;
-    float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx=-2,_dfy,_dcx,_dcy;
-    int dwidth,dheight;
-    Mat depthcameraMatrix;
-    Mat depthdistorsionMatrix;
+        //for depth
+        Mat dmap_x,dmap_y;
+        Mat depthimage;
+        //distortion coefficients required to recognize changes in distortion coefficients
+        float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;
+        float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx=-2,_dfy,_dcx,_dcy;
+        int dwidth,dheight;
+        Mat depthcameraMatrix;
+        Mat depthdistorsionMatrix;
 	std::vector<std::vector<std::vector<double>>> std_devtable;
 	double stepw_dist_model;
 	int stepw_deg_model;
