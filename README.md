@@ -70,8 +70,8 @@ The source code for the noise generator can be found in the noisegenerator folde
 python rosbagwrite.py input.bag sorted.bag
 ### adjusting the source code
 Inside ng.cpp file, the values of the following variables need to be adjusted to meet your settings:
-* lidarmatandangtopics == List of the topic(s) containing Scanmat message(s) comprising distance, material, and angle information
-* lidaroutputtopics == List of the topic(s) where range sensor data with noise should be written into
+* rangematandangtopics == List of the topic(s) containing Scanmat message(s) comprising distance, material, and angle information
+* rangeoutputtopics == List of the topic(s) where range sensor data with noise should be written into
 * depthtopics == List of the topic(s) containing Cammat message(s) comprising depth, material, and angle information
 * depthcaminfos ==  List of the corresponding camera_info topic(s) to the Cammat message
 * imgtopics == List of the topic(s) containing RGB image messages
