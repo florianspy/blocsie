@@ -1,7 +1,6 @@
 #include "FileHandler.h"
 
 
-#pragma region Constructors
 /**
  * @brief Construct a new FileHandler:: File Handler object
  * @details This constructor reads the file located at \p source_file_path and automatically generates the file path
@@ -39,10 +38,9 @@ FileHandler::FileHandler(std::string source_file_path, std::string target_file_p
 {
     ReadFile(source_file_path_);
 }
-#pragma endregion
 
 
-#pragma region Getter functions
+
 /**
  * @brief Getter function of member variable \p source_file_path_
  * 
@@ -96,10 +94,9 @@ std::vector<std::vector<double>> FileHandler::file_data() const
 {
     return file_data_;
 }
-#pragma endregion
 
 
-#pragma region Setter functions
+
 /**
  * @brief Set \p target_file_path_ to be in the same directory as the source file and set the target name of the file to be the same
  * as the source file name extended with '_interpolated'
@@ -127,10 +124,10 @@ void FileHandler::set_target_file_path(std::string target_file_path)
     
     return;
 }
-#pragma endregion
 
 
-#pragma region Member functions
+
+
 /**
  * @brief Read the file located at \p source_file_path and store the data in variable \p file_data_
  * @details This function reads a file and stores data in variable \p fiel_data_ . Files read with this function have to contain
@@ -211,9 +208,9 @@ void FileHandler::WriteFile(const std::vector<std::vector<double>>& mat)
     std::fstream interpol_file_handler;
     interpol_file_handler.open(target_file_path_, std::ios::out);
 
-    for (int i = 0; i < mat.size(); i++)
+    for (unsigned int i = 0; i < mat.size(); i++)
     {
-        for (int j = 0; j < mat.at(i).size(); j++)
+        for (unsigned int j = 0; j < mat.at(i).size(); j++)
         {
             if (!std::isnan(mat.at(i).at(j)))
             {
@@ -250,19 +247,19 @@ void FileHandler::WriteFile(const std::vector<std::vector<double>>& mat)
  */
 void FileHandler::PrintFileData() const
 {
-    for (int i = 0; i < file_data_.size(); i++)
+    for (unsigned int i = 0; i < file_data_.size(); i++)
     {
-        for (int j = 0; j < file_data_.at(i).size(); j++)
+        for (unsigned int j = 0; j < file_data_.at(i).size(); j++)
         {
             std::cout << file_data_.at(i).at(j) << " ";
         }
         std::cout << std::endl;
     }
 }
-#pragma endregion
 
 
-#pragma region Member functions (private)
+
+
 /**
  * @brief Clear all matrices and vectors so they can be reused to read and write files
  */
@@ -272,4 +269,3 @@ void FileHandler::ClearMatrices()
     col_info_vec_.clear();
     file_data_.clear();
 }
-#pragma endregion
