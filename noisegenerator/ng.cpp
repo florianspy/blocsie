@@ -23,9 +23,9 @@ int main(int argc, char* argv[]){
 	//amount of bags you want to create
 	int numSamples = atoi(argv[3]);
 	int amount_of_materials_range=4;
-	int deg_step_width_range;// degrees between two values in the lookup table
 	double dist_step_width_range;//distance in m between two values in the lookup table
 	double max_dist_range;// maximum value of the distance in lookup table
+	int deg_step_width_range;// degrees between two values in the lookup table
 	int max_deg_range;// maximum value of the degree in lookup table
 	double conststd=0.02;
 	//get the data from data model and fill it in
@@ -48,9 +48,9 @@ int main(int argc, char* argv[]){
 	colorcams.push_back(RGB());
 	colorcams.push_back(RGB());
 	int amount_of_materials_dcam=4;
-	int deg_step_width_dcam;// degrees between two values in the lookup table
 	double dist_step_width_dcam;//distance in m between two values in the lookup table
 	double max_dist_dcam;// maximum value of the distance in lookup table
+	int deg_step_width_dcam;// degrees between two values in the lookup table
 	int max_deg_dcam;// maximum value of the degree in lookup table
 	deg_step_width_dcam = ReturnDiff(reader.col_info_vec());
 	dist_step_width_dcam = ReturnDiff(reader.row_info_vec());
