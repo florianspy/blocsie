@@ -78,7 +78,7 @@ public:
 	//print the interpolated intensities
 	void PrintInterpolateIntensities();
 	//prints the matrix used for interpolation only usable with 3rd Constructor!
-	void Printrefmat1(); 
+	void PrintMat(); 
 	//print the interpolated / predicted matrix
 	void PrintpredictedMat();
 	//return calculated predicted sigma values
