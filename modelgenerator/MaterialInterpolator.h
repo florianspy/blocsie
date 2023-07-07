@@ -21,7 +21,6 @@ public:
 	*  @param step_width_interp_dist the step width regarding distance between two values of the generated standard deviations
 	*  @param step_width_interpolate_deg the step width regarding degrees between two values of the generated standard deviations
 	*/
-
 	MaterialInterpolator(std::vector<std::vector<double>> ref_material, std::vector<double> distance_ref,float k1,float k2, std::vector<double> material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg);
 	/** @brief Constructor for creating a lookup table based on the offset approach. 
 	* Use the function sigma_with_deg_dis() and pass the result to the function WriteFile called on an object of type FileHandler to the write the results into a file.
@@ -69,6 +68,7 @@ public:
 	*  @param step_width_interpolate_mu the step width regarding mu between two values of the generated standard deviations
 	*/
 	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> vel,std::vector<double> mu,double maxvel,double step_width_interp_vel,double step_width_interpolate_mu);
+	//Destructor	
 	~MaterialInterpolator();
 	//returns the interpolated degree values
 	std::vector<double> interpolated_deg();
