@@ -70,7 +70,6 @@ public:
 	*/
 	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> vel,std::vector<double> mu,double maxvel,double step_width_interp_vel,double step_width_interpolate_mu);
 	~MaterialInterpolator();
-	// Getter functions
 	//returns the interpolated degree values
 	std::vector<double> interpolated_deg();
 	//returns the interpolated distance values
@@ -94,10 +93,10 @@ private:
 	void InterpolateSimple();
 	//interpolates the intensity values up to 90 degrees based on the step_width passed to the constructor between two degree values
 	void InterpolateIntensities(std::vector<double>& material_intensity_data,std::vector<double> deg);
-	double step_width_interpolate_deg_;//before change ensure that old data was stored away
-	double step_width_interp_dist_;
-	double maxrange,maxdeg;
-	double blackrelint;
+	double step_width_interpolate_deg_;//the step width between two degree (mu for 4th Constructor) values
+	double step_width_interp_dist_;//the step width between two distance values
+	double maxrange,maxdeg;//maximum range and maximum degree value (90 for the 1-3 Constructor 100 as it refers to mu for the 4th Constructor
+	double blackrelint;//relative to white material at 0 degree intensity value for second material at 0 degree
 	bool withcrit_;//this feature is only used for ref material interpolation and enables a check if at the distance for which we calculated a sigma value a signal would still be sensed due to the intensity of the reflected signal at that position. For this check the intensity divided by distance^2 = a is divided by the intensity/distance^2 of the last distance where data still could be received. If the result is >= 1 data is received if not a -1 gets written for sigma value
 	std::vector<std::vector<double>> material_sigma_;//the calculated predicted sigma values of the material
 	std::vector<double> distance_ref_1_;//the read in distances of the data of reference material 1
