@@ -98,7 +98,7 @@ private:
 	double step_width_interpolate_deg_;//the step width between two degree (mu for 4th Constructor) values
 	double step_width_interp_dist_;//the step width between two distance values
 	double maxrange,maxdeg;//maximum range and maximum degree value (90 for the 1-3 Constructor 100 as it refers to mu for the 4th Constructor
-	double blackrelint;//relative to white material at 0 degree intensity value for second material at 0 degree
+	double blackrelint;//relative to first reference material at 0 degree intensity value for second material at 0 degree
 	std::vector<std::vector<double>> material_sigma_;//the calculated predicted sigma values of the material
 	std::vector<double> distance_ref_1_;//the read in distances of the data of reference material 1
 	std::vector<double> deg_ref_1_;//the read in degrees of the data of reference material 1)
