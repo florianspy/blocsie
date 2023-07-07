@@ -1,7 +1,9 @@
 #ifndef MATERIAL_INTERPOLATOR_H_
 #define MATERIAL_INTERPOLATOR_H_
 
+
 #include "FileHandler.h"
+
 
 class MaterialInterpolator
 {
@@ -68,24 +70,35 @@ public:
 	*/
 	MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> vel,std::vector<double> mu,double maxvel,double step_width_interp_vel,double step_width_interpolate_mu);
 	~MaterialInterpolator();
-	void change_material_intensity_data(std::vector<double> material_intensity_data,std::vector<double> deg);
 	// Getter functions
+	//returns the interpolated degree values
 	std::vector<double> interpolated_deg();
+	//returns the interpolated distance values
 	std::vector<double> interpolated_distance();
+	//print the interpolated intensities
 	void PrintInterpolateIntensities();
-	void Printrefmat1();
+	//prints the matrix used for interpolation only usable with 3rd Constructor!
+	void Printrefmat1(); 
+	//print the interpolated / predicted matrix
 	void PrintpredictedMat();
-	std::vector<std::vector<double>> mat_sigma();//return calculated predicted sigma values
-	std::vector<std::vector<double>> sigma_with_deg_dis();//return calculated predicted sigma values with the row and column infos
+	//return calculated predicted sigma values
+	std::vector<std::vector<double>> mat_sigma();
+	//return calculated predicted sigma values with the row and column infos
+	std::vector<std::vector<double>> sigma_with_deg_dis();
 private:
+	//predict the data of the material based on the offset approach (used within 2nd constructor)
+	void InterpolateOffset();
+	//predict the data of the material based on the scaling approach (used within 1st constructor)
+	void InterpolateScaling();
+	//predict the data of the material based on the simple interpolation approach (used within 3rd constructor)
+	void InterpolateSimple();
+	//interpolates the intensity values
+	void InterpolateIntensities(std::vector<double>& material_intensity_data,std::vector<double> deg);
 	double step_width_interpolate_deg_;//before change ensure that old data was stored away
 	double step_width_interp_dist_;
 	double maxrange,maxdeg;
 	double blackrelint;
 	bool withcrit_;//this feature is only used for ref material interpolation and enables a check if at the distance for which we calculated a sigma value a signal would still be sensed due to the intensity of the reflected signal at that position. For this check the intensity divided by distance^2 = a is divided by the intensity/distance^2 of the last distance where data still could be received. If the result is >= 1 data is received if not a -1 gets written for sigma value
-	void InterpolateSICK();
-	void InterpolateLDS();
-	void InterpolateRefmat();
 	std::vector<std::vector<double>> material_sigma_;//the calculated predicted sigma values of the material
 	std::vector<double> distance_ref_1_;//the read in distances of the data of reference material 1
 	std::vector<double> deg_ref_1_;//the read in degrees of the data of reference material 1)
@@ -96,7 +109,6 @@ private:
 	std::vector<std::vector<double>> ref_material_2_;//the read in standard deviations of the reference material (reference material 2 here black)
 	std::vector<double> distance_ref_2_;//the read in distances of the data of the reference material 2
 	float k1_,k2_,p1_,p2_,p3_,p4_;
-	void InterpolateIntensities(std::vector<double>& material_intensity_data,std::vector<double> deg);
 };
 
 #endif
