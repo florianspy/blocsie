@@ -107,7 +107,7 @@ private:
 	std::vector<std::vector<double>> ref_material_1_;//the read in standard deviations of the reference material (reference material 1 here white)
 	std::vector<std::vector<double>> ref_material_2_;//the read in standard deviations of the reference material (reference material 2 here black)
 	std::vector<double> distance_ref_2_;//the read in distances of the data of the reference material 2
-	float k1_,k2_,p1_,p2_,p3_,p4_;
+	float k1_,k2_,p1_,p2_,p3_,p4_;//the parameters for scaling and offset approach
 };
 
 #endif
