@@ -38,6 +38,14 @@ private:
 	std::vector<std::vector<std::vector<double>>> std_devtable;
 	
 public:
+	/*Constructor for a RangeSensor object
+	@param st_dist = step_width between two distance values in the lookup table
+	@param st_deg = step_width between two deg values in the lookup table
+	@param am_materials = amount of lookup table this object will hold
+	@param max_range = maximum distance value in the lookup table
+	@param max_deg = maximum deg value in the lookup table
+	@param conststd = constant standard deviation used in the respective GenerateFunction
+	*/
 	RangeSensor(double st_dist,int st_deg,int am_materials,double max_range,int max_deg,double conststd){
 		for(int i=0;i<am_materials;i++){
 			std_devtable.push_back({});
@@ -51,11 +59,30 @@ public:
 		param.max_range=max_range;
 		param.conststd=conststd;
 	};
+	/*adds a lookuptable for a material to the rangesensor
+	@param mat_index = index of the material 
+	@param sd_mat = the standard deviation lookup table
+	*/
 	bool insert_datamodel_matdata(int mat_index,std::vector<std::vector<double>> sd_mat);
+	/*generates a LaserScan message based on the passed lidarmatmsg with a constant standard deviation
+	@param msg = message containing information about angle of hit distance and material
+	*/
 	sensor_msgs::LaserScan GenerateConstStdMsg(const lidarmatmsg::Scanmat::ConstPtr& msg);
+	/*generates a LaserScan message based on the passed lidarmatmsg based on the data-driven approach with lookup tables
+	@param msg = message containing information about angle of hit distance and material
+	*/
 	sensor_msgs::LaserScan GenerateDataDrivenStdMsg(const lidarmatmsg::Scanmat::ConstPtr& msg);
+	/*initalize a LaserScan message with the information extracted from the lidarmatmsg 
+	@param msg = message containing information about angle of hit distance and material
+	*/
 	void InitializeMessage(const lidarmatmsg::Scanmat::ConstPtr& msg);
+	/*in this function actually the noise with constant standard deviation is generated 
+	@param msg = message containing information about angle of hit distance and material
+	*/
 	void GenerateConstStd(const lidarmatmsg::Scanmat::ConstPtr& msg);
+	/*in this function actually the noise based on the data-driven sd model is generated 
+	@param msg = message containing information about angle of hit distance and material
+	*/
 	void GenerateDataDrivenStd(const lidarmatmsg::Scanmat::ConstPtr& msg);
 };
 sensor_msgs::LaserScan RangeSensor::GenerateConstStdMsg(const lidarmatmsg::Scanmat::ConstPtr& msg){
