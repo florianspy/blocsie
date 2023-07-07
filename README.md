@@ -49,7 +49,7 @@ The depth camera (DepthAngleMaterialChannel.cs), which publishes the material an
      * BoundBox publishes BoundingBox data. If an object for which a label was assigned is visible in the camera image, its bounding box will be published. To assign a label left  click on a Gameobject. Then select "Add Component" and choose Labeling. Next, select "Use Automatic Labeling" and under "Labeling Scheme" select "use asset name". Afterward, press "Add to Label Config...". In the next window, push the "Add Label" Button next to "IdLabelConfig".
 * The LIDAR can be adjusted at the Gameobject "sick" below "robot". Here options such as minimum range, maximum range, start angle, angular range, scans per second, and total amount of rays can be set up. The LIDAR script publishes distance data on the topic set with the variable "lidar_topic", while on the topic set with "matandangtopic", the messages contain information about distance, material, and angle of hit.
 
-4. Before you click on the play button to start the simulation, ensure that the ros_tcp_endpoint side is already running and you started the recording of the rosbag.
+4. Before you click on the play button (top menu) to start the simulation, ensure that the ros_tcp_endpoint side is already running and you started the recording of the rosbag. For more information on how to record a rosbag visit http://wiki.ros.org/rosbag/Commandline.
 
 ## Lookup table generator 
 The source code to create txt files used in the noise generator as a lookup table for the data-driven model can be found in the modelgenerator folder.
