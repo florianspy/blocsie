@@ -28,6 +28,9 @@ public:
             var_nor = new boost::variate_generator<boost::taus88 &, boost::normal_distribution<float>>(vect[id],dist);
         }
     }
+	/* This function generate a random gaussian 
+	@param stdev = is not used!
+	*/
     virtual float Generate(float stdev) {
             return (*var_nor)();
     }
@@ -36,6 +39,9 @@ public:
 class RandomGaussian {
 public: 
     RandomGaussian(){}
+	/* This function generate a random gaussian 
+	@param stdev = is the standard deviation for the gaussian with mean = 0
+	*/
     float Generate(float stdev){
         boost::normal_distribution<float> dist(0.0f,stdev);
         boost::variate_generator<boost::taus88 &, boost::normal_distribution<float>> var_nor(generator,dist);
