@@ -1,6 +1,6 @@
 #include "MaterialInterpolator.h"
 #include <iomanip>
-//we need double values here as our red in values have 16 digits and therefore can only be transfered when using double not float
+//we need double values here as our read in values have 16 digits and therefore can only be transfered when using double not float
 double interpolate(double low_val,double low_deg,double up_val,double up_deg,double intmed_deg)
 {
     double m=(up_val-low_val)/(up_deg-low_deg);
@@ -10,8 +10,6 @@ double interpolate(double low_val,double low_deg,double up_val,double up_deg,dou
 //sd_hdg_ld = stand dev high degree at lower distance
 //sd_ldg_hd = sd lower degree at high distance
 double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,double sd_hdg_hd,double ld,double hd,double ldg,double hdg,double interdeg,double interdis){
-//10 deg 0.1 10 deg 0.3 -> interpolate for 0.2  20 deg 0.1 20 deg 0.3 -> interpolate for 0.2
-//
 	double sd_ldg=interpolate(sd_ldg_ld,ld,sd_ldg_hd,hd,interdis);
 	double sd_hdg=interpolate(sd_hdg_ld,ld,sd_hdg_hd,hd,interdis);
 	double value=interpolate(sd_ldg,ldg,sd_hdg,hdg,interdeg);
@@ -146,7 +144,7 @@ void MaterialInterpolator::PrintInterpolateIntensities(){
 }
 
 void MaterialInterpolator::PrintMat(){
-	std::cout<<"Ref material1 data"<<std::endl;
+	std::cout<<"Original data"<<std::endl;
 	//print angles
 	for(int i=0;i<deg_ref_1_.size();i++){
 		std::cout<<deg_ref_1_[i]<<" ";
