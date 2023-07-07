@@ -7,7 +7,7 @@ ROS version: ROS melodic, Unity version: 2022.x (Perception package minimum vers
 
 ## ROS 
 ### ROS messages
-The source code for the ROS package containing the two new ROS message definitions (Cammat.msg for depth cameras and Scanmat.msg for range sensor), which enables to send angle of hit, material, and distance in one message, can be found in the ros_msg folder. (The material is encoded as uint8 in the Cammat.msg instead of int32 as the Cammat.msg contains depth information for an image (for example, 1920x1080 datapoints),  which requires significantly more data for transmission than a range reading (for example, 811 datapoints). However, uint8 can hold up to 255 different materials and angle values with a 1 degree resolution, which is enough for our use case.)
+The source code for the ROS package containing the two new ROS message definitions (Cammat.msg for depth cameras and Scanmat.msg for range sensor), which enables to send angle of hit, material, and distance in one message, can be found in the ros_msg folder. (The material is encoded as uint8 in the Cammat.msg instead of int32 as the Cammat.msg contains depth information for an image (for example, 1920x1080 datapoints),  which requires significantly more data for transmission than a range reading (for example, 811 datapoints). However, uint8 can hold up to 255 different materials and enable angluar resolution of 1 degree, which are enough for our use case.)
 It is a prerequisite for the noise generator. 
 
 Compile it via the following command after copying the package into the catkin_ws src folder and going into the catkin_ws folder:
