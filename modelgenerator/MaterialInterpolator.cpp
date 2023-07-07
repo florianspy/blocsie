@@ -145,7 +145,7 @@ void MaterialInterpolator::PrintInterpolateIntensities(){
     std::cout << std::endl;
 }
 
-void MaterialInterpolator::Printrefmat1(){
+void MaterialInterpolator::PrintMat(){
 	std::cout<<"Ref material1 data"<<std::endl;
 	//print angles
 	for(int i=0;i<deg_ref_1_.size();i++){
@@ -199,7 +199,7 @@ double calcblackscaleforoffset(double intensity,double blackzero,double p3,doubl
 	return blackzero/intensity*p3+p4;	
 }
 
-//blackrelint should become a parameter later
+
 void MaterialInterpolator::InterpolateOffset()
 {
 	
