@@ -29,28 +29,33 @@ std::vector<std::thread> threads;
 
 class RGB{
 public:
+	/*Constructor for RGB objects
+	*/
 	RGB(){
 		cameraMatrix = Mat::eye(3, 3,  CV_32F);
 		distorsionMatrix = Mat::zeros(5, 1,  CV_32F);   
 		nb=0.2*0.2;
 		na=1.0/30.0;   
 	}        
+	/*function to create noisy image, by spliting it in several parts speeding up the process as parallel processing is used
+	@param tid = part of the image that noise is applied the part starts at y value (tid * img_ptr->image.rows/NUM_THREADS) and ends at (start + img_ptr->image.rows/NUM_THREADS)
+	*/
 	int splitLoop(int tid){
-		//Clipped_noisy_images_Heteroskedastic_modeling_and_.pdf page 7
-		//so we add up the poission distrubiton a*P(chi*y(x)) with the gaussian distrubiton sqrt(b)*ng(x)
-		//keep in mind P(chi*y()) and ng(x) are actual functions
-		//http://www.kaspercpa.com/statisticalreview.htm#:~:text=Multiplying%20a%20random%20variable%20by%20a%20constant%20increases%20the%20variance,the%20random%20variables%20are%20independent.
-		//for the variance the following is valid c^2*variance(x)=variance(c*x)
-		//=> variance(sqrt(b)*ng(x))=b*variance(ng(x))=b as variance of ng(x) is 1
-		//=> variance(P(chi*y)/chi))=chi*y/chi^2=y/chi=a*y => variance(P(z/255)*255)=255^2*z/255=255*z
-		//=>variance=a*y+b
-		//for the mean the following applies E(c*x)=c*E(x)
-		//=> E(sqrt(b)*ng(x))=0 if ng(x) was with zero mean
-		//=> E(P(chi*y)/chi)=chi*y/chi=y => E(P(z/255)*255)=z
-		//=> E=y
-		//for the variance of this term we get a*(chi*)+ b
-		//the second summand is the gaussian variance with zero mean and multiplied by sqrt(b) which lead to a variance of b
-		//the first summand is the possion variance with chi*y mean  which is multiplied bya
+	//Clipped_noisy_images_Heteroskedastic_modeling_and_.pdf page 7
+	//so we add up the poission distrubiton a*P(chi*y(x)) with the gaussian distrubiton sqrt(b)*ng(x)
+	//keep in mind P(chi*y()) and ng(x) are actual functions
+	//http://www.kaspercpa.com/statisticalreview.htm#:~:text=Multiplying%20a%20random%20variable%20by%20a%20constant%20increases%20the%20variance,the%20random%20variables%20are%20independent.
+	//for the variance the following is valid c^2*variance(x)=variance(c*x)
+	//=> variance(sqrt(b)*ng(x))=b*variance(ng(x))=b as variance of ng(x) is 1
+	//=> variance(P(chi*y)/chi))=chi*y/chi^2=y/chi=a*y => variance(P(z/255)*255)=255^2*z/255=255*z
+	//=>variance=a*y+b
+	//for the mean the following applies E(c*x)=c*E(x)
+	//=> E(sqrt(b)*ng(x))=0 if ng(x) was with zero mean
+	//=> E(P(chi*y)/chi)=chi*y/chi=y => E(P(z/255)*255)=z
+	//=> E=y
+	//for the variance of this term we get a*(chi*)+ b
+	//the second summand is the gaussian variance with zero mean and multiplied by sqrt(b) which lead to a variance of b
+	//the first summand is the possion variance with chi*y mean  which is multiplied bya
 	   vector<boost::taus88> enginevec;
 	   vector<boost::random::poisson_distribution<int>> bpd;
 	   float nla=na;
@@ -118,9 +123,22 @@ public:
 		   }
 	   }
 	   return 1;
-    }
+    	}
 
-	//create maping for distortion by passing the distortion coeffienct and the two matrix where the pixel mapping is stored
+	/*create maping for distortion by passing the distortion coeffienct and the two matrix where the pixel mapping is stored
+	@param rows = the height of the image
+	@param cols = the width of the image
+	@param _k1 = distortion parameter 
+	@param _k2 = distortion parameter 
+	@param _k3 = distortion parameter 
+	@param _p1 = distortion parameter 
+	@param _p2 = distortion parameter 
+	@param _fx = focal length in pixels
+	@param _fy = focal length in pixels
+	@param _cx = image center x coordinate
+	@param _cy = image center y coordinate
+	@param additionalfill = fill missing data points based on the data surrounding it. Only works if at least one pixel contains data
+	*/
 	void createdistortion(int rows,int cols,float _k1,float _k2,float _k3,float _p1,float _p2,float _fx,float _fy,float _cx,float _cy,bool additionalfill){
 		float s,t,r2,d1,newx,newy;
 		cout<<"Parameters k1 k2 k3 p1 p2 fx cx fy cy: "<<_k1<<" "<<_k2<<" "<<_k3<<" "<<_p1<<" "<<_p2<<" "<<_fx<<" "<<_cx<<" "<<_fy<<" "<<_cy<<endl;
@@ -251,7 +269,9 @@ public:
 			map_y=map_y2.clone();
 		}
 	}
-	//ImageConstPtr or CompressedImageConstPtr
+	/*function that distorts and adds noise to the image passed
+	@param message = image message to be manipulated
+	*/
 	sensor_msgs::ImagePtr camimg(const sensor_msgs::ImageConstPtr& message){
 		std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 		std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -306,8 +326,10 @@ public:
 			std::cout << "Time for image proccessing = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[µs]" << std::endl;
 			return image_msg;
 	    }
-    }
-
+	}
+	/*function that reads in Camerainfo and fills the distortion parameters, focal length, and image center	
+	@param message = message containing camerainfo data
+	*/
 	void caminfo(const sensor_msgs::CameraInfoPtr& message){
 		cameraMatrix.at<float>(0,0)=message->K[0];
 		cameraMatrix.at<float>(0,2)=message->K[2];
@@ -333,22 +355,26 @@ public:
 		width = message->width;
 		cout<<"Caminfo"<<_fx<<" fy"<< _fy <<"cx "<< _cx <<"cy "<< _cy <<"k1 "<< _k1  <<"k2 "<< _k2<<"k3 "<< _k3<<endl;
 	}
+	//provides the distortion mapping for x
 	Mat getmap_x(){return map_x;}
+	//provides the distortion mapping for y
 	Mat getmap_y(){return map_y;}
 private:
-	float nb,na;
-	Mat undistort,cut;
-	Mat map_x,map_y;
-	sensor_msgs::ImagePtr image_msg;
-	cv_bridge::CvImagePtr img_ptr;
-	//distortion coefficients required to recognize changes in distortion coefficients
-	float k1=-1,k2=-1,k3=-1,p1=0,p2=0;
-	float _k1=0,_k2=0,_k3=0,_p1=0,_p2=0,_fx,_fy,_cx,_cy;
-	int width,height;
-	Mat cameraMatrix;
-	Mat distorsionMatrix;
+	float nb,na;//noise parameter
+	Mat undistort;//image undistorted
+	Mat map_x,map_y;//distortion map for x and y
+	sensor_msgs::ImagePtr image_msg;//stores the image_msg that gets published
+	cv_bridge::CvImagePtr img_ptr;//stores a pointer to a opencv image
+	float k1=-1,k2=-1,k3=-1,p1=0,p2=0;//distortion coefficients required to recognize changes in distortion coefficients
+	float _k1=0,_k2=0,_k3=0,_p1=0,_p2=0,_fx,_fy,_cx,_cy;//distortion coefficients 
+	int width,height;//width and height of the image
+	Mat cameraMatrix;//the cameramatrix
+	Mat distorsionMatrix;//the distortion matrix
 };
-
+/*splits of a string based on a delimitar
+@param s = string to be split up
+@param delim = delimitar based on which the string gets split up
+*/
 vector<string> split_id (const string &s, char delim) {
     vector<string> result;
     stringstream ss (s);
@@ -361,6 +387,13 @@ vector<string> split_id (const string &s, char delim) {
 class DepthCam
 {
 public:
+	/*Constructor for creating a Depth Camera object
+	@param st_dist = step_width between two distance values in the lookup table
+	@param st_deg = step_width between two deg values in the lookup table
+	@param am_materials = amount of lookup table this object will hold
+	@param max_range = maximum distance value in the lookup table
+	@param max_deg = maximum deg value in the lookup table		
+	*/
 	DepthCam(double st_dist,int st_deg,int am_materials,double max_range,int max_deg){
 		depthcameraMatrix = Mat::eye(3, 3,  CV_32F);
 		depthdistorsionMatrix = Mat::zeros(5, 1,  CV_32F);
@@ -375,15 +408,31 @@ public:
 			std_devtable.push_back({});
 		}
 	}
-	//create maping for distortion by passing the distortion coeffienct and the two matrix where the pixel mapping is stored
+	/*create maping for distortion by passing the distortion coeffienct and the two matrix where the pixel mapping is stored
+	@param rows = the height of the image
+	@param cols = the width of the image
+	@param _k1 = distortion parameter 
+	@param _k2 = distortion parameter 
+	@param _k3 = distortion parameter 
+	@param _p1 = distortion parameter 
+	@param _p2 = distortion parameter 
+	@param _fx = focal length in pixels
+	@param _fy = focal length in pixels
+	@param _cx = image center x coordinate
+	@param _cy = image center y coordinate
+	@param additionalfill = fill missing data points based on the data surrounding it. Only works if at least one pixel contains data
+	*/
 	void createdistortion(int rows,int cols,float _k1,float _k2,float _k3,float _p1,float _p2,float _fx,float _fy,float _cx,float _cy){
 		RGB dis=RGB();
 		dis.createdistortion(rows,cols,_k1,_k2,_k3,_p1,_p2,_fx,_fy,_cx,_cy,true);
 		dmap_x=dis.getmap_x();
 		dmap_y=dis.getmap_y();
 	}
+	/*function that distorts and adds noise to the image passed
+	@param message = image message to be manipulated
+	*/
 	sensor_msgs::ImagePtr depth(const lidarmatmsg::Cammat::ConstPtr& message){
-		vector<string> frameid=split_id(message->header.frame_id,' ');
+
 		sensor_msgs::ImagePtr msg(new sensor_msgs::Image());
 		msg->header=message->header;
 		msg->height=message->height;
@@ -464,7 +513,7 @@ public:
 			}
 			sensor_msgs::ImagePtr msg = cv_bridge::CvImage(std_msgs::Header(), "32FC1", depthimage).toImageMsg();
 			msg->header=message->header;
-			msg->header.frame_id=frameid[0];
+			msg->header.frame_id=message->header.frame_id;
 			//gives the depth message the latest timestamp of a color image
 			(*msg).encoding="32FC1";
 			 cv::imshow("Distorted", depthimage);
@@ -472,6 +521,9 @@ public:
 			return msg;
 		}
 	}
+	/*function that reads in Camerainfo and fills the distortion parameters, focal length, and image center	
+	@param message = message containing camerainfo data
+	*/
 	void depthcaminfo(const sensor_msgs::CameraInfoPtr& message){
 		cout<<"In depthcaminfo";
 		depthcameraMatrix.at<float>(0,0)=message->K[0];
@@ -498,6 +550,10 @@ public:
 		dwidth = message->width;
 		cout<<"End depthcaminfo2";
 	}
+	/*adds a lookuptable for a material to the depthcam
+	@param mat_index = index of the material 
+	@param sd_mat = the standard deviation lookup table
+	*/
 	bool insert_datamodel_matdata(int mat_index,std::vector<std::vector<double>> sd_mat){
 		if(mat_index>am_materials_){
 			return false;
@@ -518,22 +574,20 @@ public:
 		return true;
 	}
 private:
-        //for depth
-        Mat dmap_x,dmap_y;
-        Mat depthimage;
-        //distortion coefficients required to recognize changes in distortion coefficients
-        float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;
-        float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx=-2,_dfy,_dcx,_dcy;
-        int dwidth,dheight;
-        Mat depthcameraMatrix;
-        Mat depthdistorsionMatrix;
+        Mat dmap_x,dmap_y;//distortion map for x and y
+        Mat depthimage;//the depthimage in opencv format
+        float dk1=-1,dk2=-1,dk3=-1,dp1=-1,dp2=-1;//distortion coefficients required to recognize changes in distortion coefficients
+        float _dk1,_dk2,_dk3,_dp1,_dp2,_dfx=-2,_dfy,_dcx,_dcy;//distortion coefficients
+        int dwidth,dheight;//width and height of the image
+        Mat depthcameraMatrix;//the cameramatrix
+        Mat depthdistorsionMatrix;//the distortion matrix
 	std::vector<std::vector<std::vector<double>>> std_devtable;
-	double stepw_dist_model;
-	int stepw_deg_model;
-	int am_materials_;
-	int max_deg_;
-	double max_range_;
-	RandomGaussian *rnpabove;
+	double stepw_dist_model;//stepwidth regarding distance between two values in the data driven model
+	double max_range_;//max distance value of the data driven model 
+	int stepw_deg_model;//stepwidth regarding degree between two values in the data driven model
+	int max_deg_;//max degree value of the data driven model
+	int am_materials_;//amount of materials we have for the data driven model
+	RandomGaussian *rnpabove;//Random Gaussian number generator
 };
 
 
