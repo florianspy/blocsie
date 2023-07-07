@@ -432,7 +432,6 @@ public:
 	@param message = image message to be manipulated
 	*/
 	sensor_msgs::ImagePtr depth(const lidarmatmsg::Cammat::ConstPtr& message){
-
 		sensor_msgs::ImagePtr msg(new sensor_msgs::Image());
 		msg->header=message->header;
 		msg->height=message->height;
