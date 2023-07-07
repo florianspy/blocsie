@@ -15,11 +15,11 @@ double interpolate(double low_val,double low_deg,double up_val,double up_deg,dou
     double t=low_val-m*low_deg;
     return (m*intmed_deg+t);
 }
-/*interpolates the value based on the 10 parameters so the value is calculate based on four coordinates  
-@param sd_ldg_ld = standard deviation value at lower degree and lower distance
-@param sd_ldg_hd = sd value at lower degree and higher distance
-@param sd_hdg_ld = sd value at higher degree and lower distance
-@param sd_hdg_ld = sd value at higher degree and higher distance
+/*interpolates a value based on the 10 parameters so the value is calculate based on four coordinates (sd = standard deviation)
+@param sd_ldg_ld = sd value at lower degree and lower distance (1st coordinate)
+@param sd_ldg_hd = sd value at lower degree and higher distance (2nd coordinate)
+@param sd_hdg_ld = sd value at higher degree and lower distance (3rd coordinate)
+@param sd_hdg_hd = sd value at higher degree and higher distance (4th coordinate)
 @param ld 	 = lower distance
 @param hd 	 = higher distance
 @param ldg	 = lower degree 
