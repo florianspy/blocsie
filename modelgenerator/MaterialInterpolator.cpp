@@ -36,6 +36,16 @@ double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,d
 	double value=interpolate(sd_ldg,ld,sd_hdg,hd,interdis);*/
 	return value;
 }
+/* calculates the scaling factor for the offset approach when second reference material is required
+@param intensity = the relative to white 0 degree intensity value for which we want to calculate scaling
+@param relint2ndatzero = the relative to white 0 degree intensity value of the second reference material at 0 degree
+@param p3 = parameter for the scaling approach
+@param p4 = second parameter for the scaling approach
+*/
+double calcblackscaleforoffset(double intensity,double relint2ndatzero,double p3,double p4){
+	return relint2ndatzero/intensity*p3+p4;	
+}
+
 
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
 
@@ -211,16 +221,13 @@ std::vector<std::vector<double>> MaterialInterpolator::sigma_with_deg_dis(){
 	return toreturn;
 }
 
-double calcblackscaleforoffset(double intensity,double blackzero,double p3,double p4){
-	return blackzero/intensity*p3+p4;	
-}
 
 
 void MaterialInterpolator::InterpolateOffset()
 {
 	
 	int dimy=maxrange/step_width_interp_dist_;
-	int dimx=90/step_width_interpolate_deg_;
+	int dimx=maxdeg/step_width_interpolate_deg_;
 	for(int rows=0;rows<dimy+1;rows++){
 	    material_sigma_.push_back({});
 	}
@@ -274,7 +281,7 @@ void MaterialInterpolator::InterpolateOffset()
 //this is the scaling and prediction stuff 
 void MaterialInterpolator::InterpolateScaling(){
     int dimy=maxrange/step_width_interp_dist_;
-    int dimx=90/step_width_interpolate_deg_;
+    int dimx=maxdeg/step_width_interpolate_deg_;
     material_sigma_.clear();
     //lds circitical value at
     float critical_val=17.9/pow(2.158,2);
@@ -324,7 +331,7 @@ void MaterialInterpolator::InterpolateSimple(){
 	float critical_val=17.9/pow(2.158,2);
 	critical_val=21.3/pow(9.92,2);
 	int dimy=maxrange/step_width_interp_dist_;
-	int dimx=90/step_width_interpolate_deg_;
+	int dimx=maxdeg/step_width_interpolate_deg_;
 	for(int rows=0;rows<dimy+1;rows++){
 	    material_sigma_.push_back({});
 	}
@@ -389,7 +396,7 @@ void MaterialInterpolator::InterpolateIntensities(std::vector<double>& material_
     material_intensity_inter_.clear();
     int size=deg.size();
 
-    for(double degree=0;degree<90;degree=degree+step_width_interpolate_deg_){ 
+    for(double degree=0;degree<maxdeg;degree=degree+step_width_interpolate_deg_){ 
         bool found = false;
         for(int m=0;m<size;m++){     
             if(degree <= deg.at(m) && m == 0){
