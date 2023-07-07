@@ -19,23 +19,22 @@
 #define foreach BOOST_FOREACH
 
 struct Parameters {
-   std::string lidartopic;
-   float maxDist;
+   std::string lidartopic;//frame_id
    double stepw_dist_model;//stepwidth regarding distance between two values in the data driven model
    int stepw_deg_model;//stepwidth regarding degree between two values in the data driven model
    int am_materials;//amount of materials we have for the data driven model
    double max_range;//max distance value of the data driven model 
    int max_deg;//max degree value of the data driven model
-   double conststd;
+   double conststd;//constant standard deviation value
 };
 
 class RangeSensor{
 private:
-	sensor_msgs::LaserScan msgWithNoise;
-	Parameters param;
-	std::vector<float> ranges;
-	RandomGaussian *rnpabove;
-	std::vector<std::vector<std::vector<double>>> std_devtable;
+	sensor_msgs::LaserScan msgWithNoise;//message to be returned
+	Parameters param;//params see above
+	std::vector<float> ranges;//distance vector
+	RandomGaussian *rnpabove;//Random Gaussian number generator
+	std::vector<std::vector<std::vector<double>>> std_devtable;//variable storing lookup table for data-driven model
 	
 public:
 	/*Constructor for a RangeSensor object
@@ -121,15 +120,15 @@ void RangeSensor::InitializeMessage(const lidarmatmsg::Scanmat::ConstPtr& msg){
 void RangeSensor::GenerateConstStd(const lidarmatmsg::Scanmat::ConstPtr& msg){
 	float precisionnoise = 0.0;
 	for(unsigned int l=0;l<ranges.size();l++){
-		if(ranges[l]==0.0 || ranges[l]==param.maxDist){
+		if(ranges[l]==0.0 || ranges[l]==param.max_range){
 				//nothing to be done
 		}
 		else{
 				precisionnoise=rnpabove->Generate(param.conststd);
 				ranges[l]=ranges[l]+ precisionnoise;
 				//value with noise is below or above max /min range
-				if(ranges[l]>param.maxDist){
-						ranges[l]=param.maxDist;
+				if(ranges[l]>param.max_range){
+						ranges[l]=param.max_range;
 				}
 				if(ranges[l]<0.0){
 						ranges[l]=0.0;
@@ -142,7 +141,7 @@ void RangeSensor::GenerateDataDrivenStd(const lidarmatmsg::Scanmat::ConstPtr& ms
 	int degindex;
 	int disindex=0;
 	for(unsigned int l=0;l<ranges.size();l++){
-		if(ranges[l]==0.0 || ranges[l]==param.maxDist){
+		if(ranges[l]==0.0 || ranges[l]==param.max_range){
 				//nothing to be done
 		}
 		else{		
@@ -170,8 +169,8 @@ void RangeSensor::GenerateDataDrivenStd(const lidarmatmsg::Scanmat::ConstPtr& ms
 			}
 			//std::cout<<"material"<<msg->material[l]<<"angle "<<msg->angle[l];
 			//value with noise is below or above max /min range
-			if(ranges[l]>param.maxDist){
-					ranges[l]=param.maxDist;
+			if(ranges[l]>param.max_range){
+					ranges[l]=param.max_range;
 			}
 			if(ranges[l]<0.0){
 					ranges[l]=0.0;
