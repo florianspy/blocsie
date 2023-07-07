@@ -1,14 +1,32 @@
 #include "MaterialInterpolator.h"
 #include <iomanip>
-//we need double values here as our read in values have 16 digits and therefore can only be transfered when using double not float
+
+/*interpolates a value based on a linear equation
+we need double values here as our read in values have 16 digits and therefore can only be transfered when using double not float
+@param low_val    = lower distance 
+@param low_deg 	  = lower degree (forming together with the atop the first coordinate)
+@param up_val     = higher distance 
+@param up_deg     = higher degree (forming together with the atop the second coordinate)
+@param intmed_deg = value for which we want to interpolate
+*/
 double interpolate(double low_val,double low_deg,double up_val,double up_deg,double intmed_deg)
 {
     double m=(up_val-low_val)/(up_deg-low_deg);
     double t=low_val-m*low_deg;
     return (m*intmed_deg+t);
 }
-//sd_hdg_ld = stand dev high degree at lower distance
-//sd_ldg_hd = sd lower degree at high distance
+/*interpolates the value based on the 10 parameters so the value is calculate based on four coordinates  
+@param sd_ldg_ld = standard deviation value at lower degree and lower distance
+@param sd_ldg_hd = sd value at lower degree and higher distance
+@param sd_hdg_ld = sd value at higher degree and lower distance
+@param sd_hdg_ld = sd value at higher degree and higher distance
+@param ld 	 = lower distance
+@param hd 	 = higher distance
+@param ldg	 = lower degree 
+@param hdg	 = higher degree 
+@param interdeg	 = degree value for which we want to interpolate
+@param interdis	 = distance value for which we want to interpolate
+*/
 double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,double sd_hdg_hd,double ld,double hd,double ldg,double hdg,double interdeg,double interdis){
 	double sd_ldg=interpolate(sd_ldg_ld,ld,sd_ldg_hd,hd,interdis);
 	double sd_hdg=interpolate(sd_hdg_ld,ld,sd_hdg_hd,hd,interdis);
