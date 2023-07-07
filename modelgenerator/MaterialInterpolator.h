@@ -92,7 +92,7 @@ private:
 	void InterpolateScaling();
 	//predict the data of the material based on the simple interpolation approach (used within 3rd constructor)
 	void InterpolateSimple();
-	//interpolates the intensity values
+	//interpolates the intensity values up to 90 degrees based on the step_width passed to the constructor between two degree values
 	void InterpolateIntensities(std::vector<double>& material_intensity_data,std::vector<double> deg);
 	double step_width_interpolate_deg_;//before change ensure that old data was stored away
 	double step_width_interp_dist_;
