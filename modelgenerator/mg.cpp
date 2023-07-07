@@ -4,6 +4,7 @@
 //path_to_res has two purpose it is used as the path where the reference is found and as the storage path
 //After using one of the four MaterialInterpolator constructors switch a FileReader's target_path to the filename you wish to write your results into
 //Then pass the return value of sigma_with_deg_dis() function called on the chosen MaterialInterpolator object as the parameter to the WriteFile() function of the same FileReader.
+//In the source code below you find four examples on how to use the four different Approaches to calculate the matrix of standard deviation values
 int main()
 {
     std::string path_to_res = static_cast<std::string>("/home/catkin_ws/src/interpolate") + "/src/";
