@@ -37,8 +37,8 @@ double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,d
 	return value;
 }
 /* calculates the scaling factor for the offset approach when second reference material is required
-@param intensity = the relative to white 0 degree intensity value for which we want to calculate scaling
-@param relint2ndatzero = the relative to white 0 degree intensity value of the second reference material at 0 degree
+@param intensity = the relative to first reference material at 0 degree intensity value for which we want to calculate scaling
+@param relint2ndatzero = the relative to first reference material at 0 degree intensity value of the second reference material at 0 degree
 @param p3 = parameter for the scaling approach
 @param p4 = second parameter for the scaling approach
 */
