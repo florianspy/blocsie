@@ -10,12 +10,18 @@ class RandomNoise{
 private:
     boost::variate_generator<boost::taus88 &, boost::normal_distribution<float>> *var_nor;
 public:
+	/* Constructor creating a random number generator
+	@param stdev = standard deviation used
+	*/
     RandomNoise(float stdev = 1.0f){
         if(stdev != 0.0f){
             boost::normal_distribution<float> dist(0.0f,stdev);
             var_nor = new boost::variate_generator<boost::taus88 &, boost::normal_distribution<float>>(generator,dist);
         }
     }
+	/* Constructor creating 8 a random number generator stored in vect
+	@param stdev = standard deviation used
+	*/
     RandomNoise(int id,float stdev){
         if(init == false){
             for(int i=0;i<8;i++){
