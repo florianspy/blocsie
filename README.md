@@ -23,6 +23,10 @@ roslaunch ros_tcp_endpoint endpoint.launch
 ## Unity
 The sources for the asset are listed in the file https://github.com/florianspy/blocsie/blob/main/BLOCSIE___UnityAssetSources.pdf
 ### installation
+* Install the HDRP Rendering Pipeline
+    1. Click on Edit->Project Settings->Graphics->HDRP Rendering Pipeline -> Fix
+    2. Right click in the bottom menu and select Create -> Rendering -> HDRP Asset
+    3. Click on Edit->Project Settings ->Graphics->Scriptable Rendering Pipeline Select the HDRP Asset
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
 * Download unity package from
