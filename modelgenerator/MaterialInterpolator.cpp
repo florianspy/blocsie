@@ -45,10 +45,18 @@ double interpolatewithangle(double sd_ldg_ld,double sd_ldg_hd,double sd_hdg_ld,d
 double calcblackscaleforoffset(double intensity,double relint2ndatzero,double p3,double p4){
 	return relint2ndatzero/intensity*p3+p4;	
 }
-
-
+/*Calculate standard deviation for a range sensor based on the scaling approach
+@param ref_material_1 = standard deviation values of the reference material we only use the values at 0 which should be those for 0 degree
+@param distance_ref = the corresponding distance values for the reference material 
+@param k1 = factor for the scaling approach
+@param k2 = factor for the scaling approach
+@param material_intensity = the intensity values for the material to be analyzed 
+@param deg = the corresponding degree values for the intensity values 
+@param maxrange = maximum distance
+@param step_width_interp_dist = step width between two distance values
+@param step_width_interpolate_deg = step width between two degree values
+*/
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1, std::vector<double> distance_ref, float k1,float k2, std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg) :ref_material_1_(ref_material_1),distance_ref_1_(distance_ref),k1_(k1),k2_(k2),material_intensity_(material_intensity),deg_intensity_(deg)
-
 {
 	step_width_interpolate_deg_=step_width_interpolate_deg;
 	step_width_interp_dist_=step_width_interp_dist;
@@ -57,7 +65,22 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_
 	maxdeg=90;
 	InterpolateScaling();
 }
-
+/*Calculate standard deviation for a range sensor based on the offset approach
+@param ref_material_1 = standard deviation values of the first reference material we only use the values at 0 which should be those for 0 degree
+@param dist_ref_1 = the corresponding distance values for the first reference material 
+@param ref_material_2 = standard deviation values of the second reference material we only use the values at 0 which should be those for 0 degree
+@param dist_ref_2 = the corresponding distance values for the second reference material 
+@param relintref2_0deg = relative intensity value of the second material at 0 degree
+@param p1 = factor for the offset approach
+@param p2 = factor for the offset approach
+@param p3 = factor for the offset approach
+@param p4 = factor for the offset approach
+@param material_intensity = the intensity values for the material to be analyzed 
+@param deg = the corresponding degree values for the intensity values 
+@param maxrange = maximum distance
+@param step_width_interp_dist = step width between two distance values
+@param step_width_interpolate_deg = step width between two degree values
+*/
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_material_1,std::vector<double> dist_ref_1,std::vector<std::vector<double>> ref_material_2,std::vector<double> dist_ref_2,double relintref2_0deg,float p1,float p2,float p3,float p4,std::vector<double>  material_intensity,std::vector<double> deg,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg) : ref_material_1_(ref_material_1),distance_ref_1_(dist_ref_1),ref_material_2_(ref_material_2),distance_ref_2_(dist_ref_2),p1_(p1),p2_(p2),p3_(p3),p4_(p4),deg_intensity_(deg)
 {
 	step_width_interpolate_deg_=step_width_interpolate_deg;
@@ -68,7 +91,16 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> ref_
 	maxdeg=90;
 	InterpolateOffset();
 }
-
+/*Calculate standard deviation for a range sensor based on the interpolation approach
+@param material = standard deviation values of the material for which we want to interpolate
+@param dis = the corresponding distance values for the material 
+@param material_intensity = the intensity values for the material to be analyzed 
+@param deg_intensity = the corresponding degree values for the intensity values 
+@param maxrange = maximum distance
+@param step_width_interp_dist = step width between two distance values
+@param step_width_interpolate_deg = step width between two degree values
+@param withcrit = is there a critical value of intensity below which no more data can be produced
+*/
 MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> deg,std::vector<double>  material_intensity,std::vector<double> deg_intensity,double maxrange,double step_width_interp_dist,double step_width_interpolate_deg,bool withcrit):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(deg),deg_intensity_(deg_intensity),withcrit_(withcrit)
 {
 	step_width_interpolate_deg_=step_width_interpolate_deg;
@@ -78,13 +110,21 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 	maxdeg=90;
 	InterpolateSimple();
 }
-MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> dis,std::vector<double> mu,double maxvel,double step_width_interp_dist,double step_width_interpolate_mu):ref_material_1_(material),distance_ref_1_(dis),deg_ref_1_(mu){
-	step_width_interp_dist_=step_width_interp_dist;
+/*Calculate wheel odometry vs friction coefficient on a simple interpolation approach
+@param material = standard deviation values
+@param vel = the corresponding velocity values 
+@param mu = the corresponding friction coefficients 
+@param maxvel = the maximum velocity
+@param step_width_interp_vel = step width between the velocity values
+@param step_width_interpolate_mu = step width between the friction coefficient values
+*/
+MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> material,std::vector<double> vel,std::vector<double> mu,double maxvel,double step_width_interp_vel,double step_width_interpolate_mu):ref_material_1_(material),distance_ref_1_(vel),deg_ref_1_(mu){
+	step_width_interp_dist_=step_width_interp_vel;
 	maxrange=maxvel;
 	step_width_interpolate_deg_=step_width_interpolate_mu;
 	int dimy=maxrange/step_width_interp_dist_;
-	maxdeg=100.0;
-	int dimx=maxdeg/step_width_interpolate_mu;
+	maxmu=100.0;
+	int dimx=maxmu/step_width_interpolate_mu;
 	for(int rows=0;rows<dimy+1;rows++){
 	    material_sigma_.push_back({});
 	}
@@ -98,11 +138,8 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 					break;
 			}
 		}
-		if(degindex==deg_ref_1_.size()-1){
-			degindex=degindex-1;
-		}
 		if(degindex==deg_ref_1_.size()){
-			degindex=degindex-2;
+			degindex=degindex-1;
 		}
 		for(double y=0;y<=maxrange+0.01;y=y+step_width_interp_dist_){
 			bool foundlarger=false;		
@@ -112,8 +149,7 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 					if(distindx == 0){distindx=1;}
 					float value =-1;
 					if(ref_material_1_[distindx-1][degindex+1] == -1 ||ref_material_1_[distindx][degindex+1] == -1 || ref_material_1_[distindx-1][degindex] == -1 || ref_material_1_[distindx][degindex] == -1){}
-					else{	
-
+					else{
 						value = interpolatewithangle(ref_material_1_[distindx-1][degindex+1],ref_material_1_[distindx][degindex+1],ref_material_1_[distindx-1][degindex],ref_material_1_[distindx][degindex],distance_ref_1_[distindx-1],distance_ref_1_[distindx],deg_ref_1_[degindex],deg_ref_1_[degindex+1],step_width_interpolate_deg_*deg,y);
 						if(value < 0){
 							value=0;
@@ -128,7 +164,6 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 					float value =-1;
 					if(ref_material_1_[lastvalue-1][degindex+1] == -1 ||ref_material_1_[lastvalue][degindex+1] == -1 || ref_material_1_[lastvalue-1][degindex] == -1 || ref_material_1_[lastvalue][degindex] == -1){}
 					else{
-
 					value = interpolatewithangle(ref_material_1_[lastvalue-1][degindex],ref_material_1_[lastvalue][degindex],ref_material_1_[lastvalue-1][degindex+1],ref_material_1_[lastvalue][degindex+1],distance_ref_1_[lastvalue-1],distance_ref_1_[lastvalue],deg_ref_1_[degindex],deg_ref_1_[degindex+1],step_width_interpolate_deg_*deg,y);}
 					if(value < 0){
 						value=0;
@@ -139,13 +174,10 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 	    		row=row+1;}
 	}
 }
-
-
-
-
+/*Destructor
+*/
 MaterialInterpolator::~MaterialInterpolator()
 {
-
 }
 
 std::vector<double> MaterialInterpolator::interpolated_deg(){
@@ -284,8 +316,7 @@ void MaterialInterpolator::InterpolateScaling(){
     int dimx=maxdeg/step_width_interpolate_deg_;
     material_sigma_.clear();
     //lds circitical value at
-    float critical_val=17.9/pow(2.158,2);
-   
+    float critical_val=17.9/pow(2.158,2);   
     //remember we start at 0 so we need +1 more storage fields
     for(int rows=0;rows<dimy+1;rows++){
       	    material_sigma_.push_back({});
