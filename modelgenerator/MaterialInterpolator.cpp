@@ -138,8 +138,12 @@ MaterialInterpolator::MaterialInterpolator(std::vector<std::vector<double>> mate
 					break;
 			}
 		}
-		if(degindex==deg_ref_1_.size()){
+		//size is for example 3 so the last element is at 2 however we look at degindex +1 so we need degindex-1 here
+		if(degindex==deg_ref_1_.size()-1){
 			degindex=degindex-1;
+		}
+		if(degindex==deg_ref_1_.size()){
+			degindex=degindex-2;
 		}
 		for(double y=0;y<=maxrange+0.01;y=y+step_width_interp_dist_){
 			bool foundlarger=false;		
