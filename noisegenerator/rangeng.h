@@ -86,7 +86,7 @@ public:
 };
 sensor_msgs::LaserScan RangeSensor::GenerateConstStdMsg(const lidarmatmsg::Scanmat::ConstPtr& msg){
         ranges = std::vector<float>(msg->ranges); // Copy ranges from the message to the variable ranges
-        param.maxDist = msg->range_max;
+        param.max_range = msg->range_max;
         param.lidartopic= msg->header.frame_id;
         GenerateConstStd(msg); // Using parsed parameters to apply appropriate accuracies and precisions to ranges
         InitializeMessage(msg);//fill msg
@@ -96,7 +96,7 @@ sensor_msgs::LaserScan RangeSensor::GenerateConstStdMsg(const lidarmatmsg::Scanm
 
 sensor_msgs::LaserScan RangeSensor::GenerateDataDrivenStdMsg(const lidarmatmsg::Scanmat::ConstPtr& msg){
         ranges = std::vector<float>(msg->ranges); // Copy ranges from the message to the variable ranges
-        param.maxDist = msg->range_max;
+        param.max_range = msg->range_max;
         param.lidartopic= msg->header.frame_id;
         GenerateDataDrivenStd(msg); // Using parsed parameters to apply appropriate accuracies and precisions to ranges
         InitializeMessage(msg);//fill msg
