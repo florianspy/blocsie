@@ -29,8 +29,8 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
     3. Click on Edit->Project Settings ->Graphics->Scriptable Rendering Pipeline Select the HDRP Asset
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
-* Download unity package from
-[https://drive.google.com/file/d/1koVoI8hh0QAry02isOlENKvnfQ_PISZm/viewImport](https://drive.google.com/file/d/1kiy-Ao48dVKFo9Hv-bqa2lqVNuO40mF2/view?usp=drive_link) and install package in Unity
+* Download unity package from [https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link](https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link)
+and install package in Unity
 * Ensure that you are using Vulkan as graphics api which can be set under Project Settings->Player->Disable "Auto Graphics API for ". Then at "Graphics APIs for " drag Vulkan to the top of the list.
 * Ensure that under Project Settings->Physics->Simulation Mode is set to Script.
 * Our simulation was optimized for a FixedUpdate time of 0.02 seconds (Time between two FixedUpdate calls = time between two simulation steps). Set this value at Project Settings->Time->Fixed Timestamp. Lower values can lead to significant performance drops as within the FixedUpdate timestamp all the scripts need to be executed.
