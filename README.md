@@ -28,6 +28,7 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
     2. Right click in the bottom menu and select Create -> Rendering -> HDRP Asset
     3. Click on Edit->Project Settings ->Graphics->Scriptable Rendering Pipeline Select the HDRP Asset
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
+* Install via the Unity Package Manager the following packages: Input System, ProBuilder, and Splines
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
 * Download unity package from [https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link](https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link)
 and install package in Unity
