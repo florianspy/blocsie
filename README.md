@@ -30,8 +30,8 @@ The sources for the asset are listed in the file https://github.com/florianspy/b
 * Install the unity perception package following the guide https://docs.unity3d.com/Packages/com.unity.perception@1.0/manual/SetupSteps.html
 * Install via the Unity Package Manager the following packages: Input System, ProBuilder, and Splines
 * Install the unity ros_tcp_endpoint package following the guide https://github.com/Unity-Technologies/ROS-TCP-Connector
-* Download unity package from [https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link](https://drive.google.com/file/d/106-Fhr9kGmBtAkS5c5qUhnI5itrKOVhF/view?usp=drive_link)
-and install package in Unity
+* Download unity package from [[https://drive.google.com/file/d/1s7GDl9ETjAgNLJzvL4nFmKTNyEWWGf_N/view?usp=drive_link](https://drive.google.com/file/d/1nPUYj7LzY8gQAGexDYsrbysYvJKGEuDa/view?usp=drive_link)]
+and install the package in Unity
 * Ensure that you are using Vulkan as graphics api which can be set under Project Settings->Player->Disable "Auto Graphics API for ". Then at "Graphics APIs for " drag Vulkan to the top of the list.
 * Ensure that under Project Settings->Physics->Simulation Mode is set to Script.
 * Our simulation was optimized for a FixedUpdate time of 0.02 seconds (Time between two FixedUpdate calls = time between two simulation steps). Set this value at Project Settings->Time->Fixed Timestamp. Lower values can lead to significant performance drops as within the FixedUpdate timestamp all the scripts need to be executed.
